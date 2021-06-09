@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Pure Easy App | Admin Pannel</title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="/light/assets/css/app.min.css">
+  <link rel="stylesheet" href="/light/assets/bundles/jqvmap/dist/jqvmap.min.css">
+  <link rel="stylesheet" href="/light/assets/bundles/weather-icon/css/weather-icons.min.css">
+  <link rel="stylesheet" href="/light/assets/bundles/weather-icon/css/weather-icons-wind.min.css">
+  <link rel="stylesheet" href="/light/assets/bundles/summernote/summernote-bs4.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/light/assets/css/style.css">
+  <link rel="stylesheet" href="/light/assets/css/components.css">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="/light/assets/css/custom.css">
+  <link rel='shortcut icon' type='image/x-icon' href='/images/logo.jpg' />
+</head>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <div class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li>
+            <li>
+            
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav navbar-right">
+       
+          <li class="dropdown"><a href="#" data-toggle="dropdown"
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="/light/assets/img/user.png"
+                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+              <div class="dropdown-title">Hello Admin</div>
+               <a href="/admin/change-password" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
+                Change Password
+            
+              <div class="dropdown-divider"></div>
+              <a href="/admin/logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html"> <span
+                class="logo-name">Daily Nourish</span>
+            </a>
+          </div>
+          <!-- <div class="sidebar-user">
+            <div class="sidebar-user-picture">
+              <img alt="image" src="/light/assets/img/userbig.png">
+            </div>
+            <div class="sidebar-user-details">
+              <div class="user-name">Sarah Smith</div>
+              <div class="user-role">Administrator</div>
+            </div>
+          </div> -->
+          <ul class="sidebar-menu">
+            <li class="menu-header">Main</li>
+            <li class="dropdown active">
+              <a href="/admin/dashboard" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <!-- <ul class="dropdown-menu">
+                <li class="active"><a class="nav-link" href="index.html">Dashboard V1</a></li>
+                <li><a class="nav-link" href="index2.html">Dashboard V2</a></li>
+              </ul> -->
+            </li>
+            <li class="dropdown">
+              <a href="#" class="nav-link has-dropdown"><i data-feather="briefcase"></i><span>Store Management</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/category">Category</a></li>
+                <li><a class="nav-link" href="/subcategory">Sub Category</a></li>
+                <li><a class="nav-link" href="/size">Size</a></li>
+                <li><a class="nav-link" href="/brand">Brand</a></li>
+                <li><a class="nav-link" href="/pincode">Pincode</a></li>
+                <li><a class="nav-link" href="/offer">Offer</a></li>
+                <li><a class="nav-link" href="/banner">Banner</a></li>
+                <li><a class="nav-link" href="/purchase-product">Purchase Product</a></li>
+                <!-- <li><a class="nav-link" href="/product-quantity">Product Quantity</a></li> -->
+                <li><a class="nav-link" href="/coupon">Coupon</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="/time-slot" style="color: #2B9AEF;" class="nav-link"><i data-feather="monitor"></i><span>Time Slot</span></a>
+                <!-- <ul class="dropdown-menu">
+                  <li class="active"><a class="nav-link" href="index.html">Dashboard V1</a></li>
+                  <li><a class="nav-link" href="index2.html">Dashboard V2</a></li>
+                </ul> -->
+              </li>
+
+
+
+              <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i data-feather="briefcase"></i><span>Orders</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="/order-history">History</a></li>
+                  <li><a class="nav-link" href="/running-order">Running Order</a></li>
+                  <li><a class="nav-link" href="/cancel-order">Cancel Order</a></li>
+                 
+                </ul>
+              </li>
+
+
+
+              <li class="dropdown">
+                <a href="/customers" style="color: #2B9AEF;" class="nav-link"><i data-feather="monitor"></i><span>Cusotmers</span></a>
+                <!-- <ul class="dropdown-menu">
+                  <li class="active"><a class="nav-link" href="index.html">Dashboard V1</a></li>
+                  <li><a class="nav-link" href="index2.html">Dashboard V2</a></li>
+                </ul> -->
+              </li>
+
+
+              <li class="dropdown">
+                <a href="/delivery" style="color: #2B9AEF;" class="nav-link"><i data-feather="monitor"></i><span>Delivery Boy</span></a>
+                <!-- <ul class="dropdown-menu">
+                  <li class="active"><a class="nav-link" href="index.html">Dashboard V1</a></li>
+                  <li><a class="nav-link" href="index2.html">Dashboard V2</a></li>
+                </ul> -->
+              </li>
+
+
+              <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i data-feather="briefcase"></i><span>Reports</span></a>
+                <ul class="dropdown-menu">
+                  <!-- <li><a class="nav-link" href="/purchase-report">Purchase Report</a></li> -->
+                  <!-- <li><a class="nav-link" href="/sales-report">Sales Report</a></li> -->
+                  <li><a class="nav-link" href="/stock-report">Stock Report</a></li>
+                 
+                </ul>
+              </li>
+
+         
+           
+                
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+      </div>
