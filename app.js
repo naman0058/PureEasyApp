@@ -20,6 +20,7 @@ var timeslot = require('./routes/timeslot');
 var pincode = require('./routes/pincode');
 var product = require('./routes/product');
 var api = require('./routes/api');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -61,6 +62,7 @@ app.use('/time-slot',timeslot);
 app.use('/pincode',pincode);
 app.use('/purchase-product',product);
 app.use('/api',api);
+app.use('/login',login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
