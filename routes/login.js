@@ -14,7 +14,7 @@ router.get('/',(req,res)=>{
     var query1 = `select * from category`
     pool.query(query+query1,(err,result)=>{
         if(err) throw err;
-        else res.render('login',{msg : ''})
+        else res.render('login',{msg : '' , login:false,result})
     })
   
 
