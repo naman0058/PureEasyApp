@@ -198,17 +198,37 @@
                         <td class="font-weight-600"><%=result[8][i].address%></td>
                         <td class="font-weight-600"><%=result[8][i].status%></td>
                        
-                        <td>Rs. <%=result[8][i].amount%></td>
+                        <td>Rs. <%=result[8][i].price%></td>
+
+
+
+                        <!-- <% if(result[i].status=='pending') { %>
+
+                          <td> <a href="/admin/dashboard/update-status?id=<%=result[i].id%>&status=Dispatch">Dispatch</a></td>
+                         
+                           <% } else if(result[i].status == 'Dispatch') { %>
+                            
+                             <td> <a href="/admin/dashboard/update-status?id=<%=result[i].id%>&status=Delieverd">Delieverd</a></td>
+                         
+                             <% } else { %> 
+
+                              <td> <a href="/admin/dashboard/update-status?id=<%=result[i].id%>&status=completed">Complete</a></td>
+
+                              <% } %> -->
 
 <% if(result[8][i].status=='pending') { %>
 
  <td> <a href="/admin/update-status?id=<%=result[8][i].id%>&status=Dispatch">Dispatch</a></td>
 
-  <% } else { %>
+  <% } else if(result[8][i].status=='Dispatch') { %>
    
-    <td> <a href="/admin/update-status?id=<%=result[8][i].id%>&status=Completed">Completed</a></td>
+    <td> <a href="/admin/update-status?id=<%=result[8][i].id%>&status=Delieverd">Delieverd</a></td>
 
-    <% } %>
+    <% } else { %> 
+
+      <td> <a href="/admin/update-status?id=<%=result[8][i].id%>&status=Completed">Completed</a></td>
+
+      <% } %>
 
                         <td>
                           <!-- <select class="form-control update_status"  id='<%=result[8][i].id%>'>
