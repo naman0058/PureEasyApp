@@ -2,15 +2,16 @@ let categories = []
 
 let table = 'customers'
 
+let name = $('#name123').val()
+
+// alert(name)
 
   
-$.getJSON(`${table}/all`, data => {
+$.getJSON(`${table}/${name}`, data => {
     categories = data
     makeTable(data)
     
   
-
-
 })
 
 function makeTable(categories){
@@ -23,6 +24,7 @@ function makeTable(categories){
 
 <th>Name</th>
 <th>Number</th>
+<th>Address</th>
 <th>Actions</th>
 </tr>
 </thead>
@@ -33,9 +35,28 @@ table+=`<tr>
 
 <td>${item.name}</td>
 <td>${item.number}</td>
+<td>${item.address}</td>
+
 <td><a href='/customers/wishlist/?number=${item.number}'>Wishlist</a></td>
+<td><a href='/customers/cart/?number=${item.number}'>cart</a></td>
+
+
+
+
 <td><a href='/customers/orders/?number=${item.number}'>Orders</a></td>
-<td>
+<td><a href='/customers/transacations/?number=${item.number}'>Tansacations</a></td>`
+
+if(item.status == ''  || item.status == undefined){
+    table+=`<td><button type='button' id= '${item.id}' class="btn btn-primary block">Block</button></td>`
+
+}
+else{
+  table+= ` <td><button type='button' id= '${item.id}' class="btn btn-danger unblock">Unblock</button></td>`
+
+}
+
+
+table+=`<td>
 
 </td>
 </tr>`
@@ -59,6 +80,30 @@ let a = $('#action').val()
 window.location.href = `/customers/${a}`
 
 })
+
+
+$('#result').on('click', '.block', function() {
+    let id = $(this).attr('id')
+    let status = 'block'
+    $.post('/customers/update',{id,status},data=>{
+        window.location.href = `/customers`
+
+    })
+    
+    })
+
+    
+
+    $('#result').on('click', '.unblock', function() {
+        let id = $(this).attr('id')
+   let status = ''
+        $.post('/customers/update',{id,status},data=>{
+            window.location.href = `/customers`
+    
+        })
+        
+        })
+        
 
 
 $('#result').on('click', '.deleted', function() {

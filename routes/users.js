@@ -9,7 +9,31 @@ const fs = require("fs");
 
 router.get('/',(req,res)=>{
     if(req.session.adminid){
-        res.render('users')
+        res.render('users',{msg:'all'})
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+router.get('/active',(req,res)=>{
+    if(req.session.adminid){
+        res.render('users',{msg:'active'})
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+router.get('/inactive',(req,res)=>{
+    if(req.session.adminid){
+        res.render('users',{msg:'inactive'})
     }
     else {
         res.render('admin_login',{msg:'Please Login First'})
@@ -80,7 +104,9 @@ router.get('/delete', (req, res) => {
 
 
 router.post('/update', (req, res) => {
+    
     pool.query(`update ${table} set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+        console.log(err)
         if(err) {
             res.json({
                 status:500,
@@ -152,6 +178,27 @@ router.get('/wishlist',(req,res)=>{
         else res.render('show-wishlist',{result:result})
 	})
 })
+
+
+
+router.get('/cart',(req,res)=>{
+	pool.query(`select c.* , (select p.name from product p where p.id = c.booking_id) as productname from cart c where c.usernumber = '${req.query.number}' and c.status is null`,(err,result)=>{
+		if(err) throw err;
+       // else res.json(result)
+        else res.render('show-cart',{result:result})
+	})
+})
+
+
+router.get('/transacations',(req,res)=>{
+	pool.query(`select c.* , (select p.name from product p where p.id = c.booking_id) as productname from cart c where c.usernumber = '${req.query.number}' and c.status is null`,(err,result)=>{
+		if(err) throw err;
+       // else res.json(result)
+        else res.render('show-transacations',{result:result})
+	})
+})
+
+
 
 
 router.get('/orders',(req,res)=>{

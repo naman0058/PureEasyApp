@@ -15,34 +15,33 @@ router.get('/',(req,res)=>{
 })
 
 
-router.post('/insert',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'image1', maxCount: 1 },{ name: 'image2', maxCount: 1 }]),(req,res)=>{
+router.post('/insert',upload.single('image') ,(req,res)=>{
 	let body = req.body
+    body['image'] = req.file.filename;
 
-    console.log('files data',req.files)
+    // console.log('files data',req.files)
+    let price = ''
 
-    let price = (req.body.price)/(req.body.discount)
+    // console.log('dta',req.body)
+    
+
+  if(req.body.discount == 0) {
+    price = 0
+  }
+  else {
+    price = (req.body.price)/(req.body.discount)
+  }
+  
     let net_price = (req.body.price)-price
     body['net_amount'] = Math.round(net_price);
 
-if(req.files.image[0]){
-  body['image'] = req.files.image[0].filename
-
-}
-
-  
-if(req.files.image1){
-    body['image1'] = req.files.image1[0].filename
-  }
-
-  
-if(req.files.image2){
-    body['image2'] = req.files.image2[0].filename
-  }
+      
 
 console.log('body hai',req.body)
    
 	pool.query(`insert into ${table} set ?`,body,(err,result)=>{
 		if(err) {
+            console.log('eroor',err)
             res.json({
                 status:500,
                 type : 'error',

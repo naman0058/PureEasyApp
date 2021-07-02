@@ -4,39 +4,52 @@
         <section class="section">
           <div class="section-body">
             <div class="row">
-
               <div class="col-12 col-md-12 col-lg-12">
               
             
-
                 
+                <div class="table-responsive">
 
-                <div class="row">
-                  <div class="col-lg-12">
-                  <textarea type="text" class="form-control" cols="4" rows="4" placeholder="Send Message To All Users"></textarea>
-                
-                  </div>
-
-                  <div class="col-lg-12"  style="margin-top: 15px;margin-bottom: 15px;float: right;">
-                    <button type="button" class="btn btn-primary float-right send_message">Send</button> 
-
-                    </div>
+     
+                    <table id="report-table" class="table table-bordered table-striped mb-0">
+                    <thead>
+                    <tr>
+                    
                    
+                    <th>Number</th>
+                   <th>Amount</th>
+                   <th>Credit/Deduct</th>
+                   <th>Date</th>
+
+                  
                  
-                  </div>
-
-                
-<div class="card mb-4" id='result'></div>
-
-
-
+            
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
 
 
+                        <% for(i=0;i<result.length;i++){ %>
+                  <tr>
+             
+                    <td><%=result[i].usernumber%></td>
+                  <td><%=result[i].amount%></td>
+                  <td><%=result[i].sign%></td>
+                  <td><%=result[i].date%></td>
 
 
+                   
+                   
+                  
+                    </tr>
 
+<% } %>
 
-<input type="hidden" value="<%=msg%>" id="name123">
+                    </tbody>
+                    </table>
+                    </div>
+
 
 
     
@@ -94,14 +107,6 @@
   </script>
 
 </body>
-
-
-
-<script>
-  $('.send_message').click(function(){
-    alert('hi')
-  })
-</script>
 
 
 </html>

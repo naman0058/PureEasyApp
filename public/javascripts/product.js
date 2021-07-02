@@ -186,6 +186,8 @@ $('#result').on('click', '.edits', function () {
     $('#psizeid').val(result.sizeid);
     $('#pquantity').val(result.quantity);
     $('#pdescription').val(result.description);
+    console.log('dhdg',result.description)
+    // $container.html($container.text());
   //  $('#pextra').val(result.extra);
      //$('#peid').val(result.id)
     

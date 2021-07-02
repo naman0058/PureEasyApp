@@ -597,4 +597,53 @@ else{
 
 
 
+
+
+
+
+router.get('/website-customization',(req,res)=>{
+  res.render('website_customization')
+})
+
+
+
+router.get('/faq-customization',(req,res)=>{
+  res.render('faq_customization')
+})
+
+
+
+
+router.post('/faq-insert',(req,res)=>{
+  let body = req.body
+  pool.query(`insert into faq set ?`,body,(err,result)=>{
+    if(err) throw err;
+    else res.json({
+      msg : 'success'
+    })
+  })
+})
+
+
+
+router.post('/website-customization-insert',(req,res)=>{
+  let body = req.body   
+  pool.query(`select * from website_customize where name = '${req.body.name}'`,(err,result)=>{
+    if(err) throw err;
+    else if(result[0]){
+      res.json({
+        msg : 'Already Inserted'
+      })
+    }
+    else {
+      pool.query(`insert into website_customize set ?`,body,(err,result)=>{
+        if(err) throw err;
+        else res.json({
+          msg : 'success'
+        })
+      })
+    }
+  })
+})
+
 module.exports = router;

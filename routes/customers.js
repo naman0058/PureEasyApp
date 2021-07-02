@@ -9,7 +9,31 @@ const fs = require("fs");
 
 router.get('/',(req,res)=>{
     if(req.session.adminid){
-        res.render('users')
+        res.render('users',{msg:'all'})
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+router.get('/active',(req,res)=>{
+    if(req.session.adminid){
+        res.render('users',{msg:'active'})
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+router.get('/inactive',(req,res)=>{
+    if(req.session.adminid){
+        res.render('users',{msg:'inactive'})
     }
     else {
         res.render('admin_login',{msg:'Please Login First'})

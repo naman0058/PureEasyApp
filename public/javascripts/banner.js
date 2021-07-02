@@ -21,6 +21,7 @@ function makeTable(categories){
 <thead>
 <tr>
 <th>Image</th>
+<th>Banner Name</th>
 <th>Type</th>
 <th>Options</th>
 </tr>
@@ -32,6 +33,7 @@ table+=`<tr>
 <td>
 <img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
 </td>
+<td>${item.name}</td>
 <td>${item.type}</td>
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
@@ -69,6 +71,8 @@ $('#result').on('click', '.edits', function() {
     $('#result').hide()
     $('#insertdiv').hide() 
     $('#pid').val(result.id)
+    $('#pname').val(result.name)
+
      $('#ptype').val(result.type)
    
  })
@@ -77,6 +81,7 @@ $('#result').on('click', '.edits', function() {
 
  $('#result').on('click', '.updateimage', function() {
     const id = $(this).attr('id')
+    
     const result = categories.find(item => item.id == id);
     $('#peid').val(result.id)
 })
@@ -87,6 +92,7 @@ $('#result').on('click', '.edits', function() {
 $('#update').click(function(){  //data insert in database
     let updateobj = {
         id: $('#pid').val(),
+        name :$('#pname').val(),
         type: $('#ptype').val(),
        
         }

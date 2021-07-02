@@ -782,4 +782,50 @@ router.post('/remove-all-data-by-id',(req,res)=>{
 
 
 
+
+
+
+
+// wish list api
+
+
+router.post('/save-wishlist',(req,res)=>{
+  let body = req.body;
+  console.log('body h',req.body)
+
+pool.query(`select * from wishlist where usernumber = '${req.body.usernumber}' and booking_id = '${req.body.booking_id}'`,(err,result)=>{
+  if(err) throw err;
+  else if(result[0]) {
+    pool.query(`delete from wishlist where usernumber = '${req.body.usernumber}' and booking_id = '${req.body.booking_id}'`,(err,result)=>{
+      if(err) throw err;
+      else  res.json({
+        msg : 'success'
+    })
+    })
+  }
+  else {
+    pool.query(`insert into wishlist set ?`,body,(err,result)=>{
+      if(err) throw err;
+      else res.json({
+          msg : 'success'
+      })
+  })
+  }
+})
+
+ 
+})
+
+
+
+router.post('/mywishlist',(req,res)=>{
+  pool.query(`select * from wishlist where usernumber = '${req.body.usernumber}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
 module.exports = router;
