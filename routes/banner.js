@@ -19,6 +19,29 @@ router.get('/',(req,res)=>{
 })
 
 
+
+
+
+
+
+
+router.get('/management',(req,res)=>{
+    if(req.session.adminid){
+        pool.query(`select * from product order by name desc`,(err,result)=>{
+            if(err) throw err;
+            else res.render('banner_management',{result})
+        })
+        
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+
 router.post('/storeEditId',(req,res)=>{
     req.session.editStoreId = req.body.id
     res.send('success')

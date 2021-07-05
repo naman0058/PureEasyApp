@@ -1141,7 +1141,7 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
 
-  router.post('/general-faq',(req,res)=>{
+  router.get('/general-faq',(req,res)=>{
     pool.query(`select * from faq where type = 'General Question'`,(err,result)=>{
        if(err) throw err;
        else res.json(result)
@@ -1151,7 +1151,7 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
   
-  router.post('/wallet-faq',(req,res)=>{
+  router.get('/wallet-faq',(req,res)=>{
     pool.query(`select * from faq where type = 'Wallet Question'`,(err,result)=>{
        if(err) throw err;
        else res.json(result)
@@ -1163,7 +1163,7 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
   router.get('/new-subcategory',(req,res)=>{
-    pool.query(`select * from subcategory where categoryid = '${req.body.categoryid}'`,(err,result)=>{
+    pool.query(`select * from subcategory where categoryid = '${req.query.categoryid}'`,(err,result)=>{
       if(err) throw err;
       else res.json(result)
     })

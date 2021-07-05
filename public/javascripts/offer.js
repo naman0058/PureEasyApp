@@ -15,7 +15,7 @@ $.getJSON(`${table}/all`, data => {
 
 
 
-$.getJSON(`banner/all`, data => {
+$.getJSON(`/banner/all`, data => {
     categories = data
     fillDropDown('bannerid', data, 'Choose Banner Name', 0)
   
