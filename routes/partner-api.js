@@ -134,7 +134,7 @@ router.post('/booking',(req,res)=>{
 
 
 router.post('/total-booking',(req,res)=>{
-    pool.query(`select count(id) from booking where assigned_number='${req.body.number}' order by id desc `,(err,result)=>{
+    pool.query(`select count(id) as counter from booking where assigned_number='${req.body.number}' order by id desc `,(err,result)=>{
         if(err) throw err;
         else {
             res.json({

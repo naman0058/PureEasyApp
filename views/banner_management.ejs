@@ -7,7 +7,7 @@ dd<%- include ('./adminheader.ejs') %>
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card insertdiv" id='insertdiv'>
             <div class="card-header">
-              <h4>New Notification / Offer </h4>
+              <h4>Banner Management </h4>
             </div>
            
             <div class="card-body">
@@ -21,7 +21,7 @@ dd<%- include ('./adminheader.ejs') %>
 
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
-                        <label>Banner Type</label>
+                        <label>Banner Name</label>
 <select class="form-control" name="bannerid" id="bannerid">
 </select>
                       </div>
@@ -36,7 +36,7 @@ dd<%- include ('./adminheader.ejs') %>
             </div>
             <div class="card-footer text-right">
               <button class="btn btn-primary mr-1" type="button" id="next">Next</button>
-              <button class="btn btn-danger mr-1 show" id="show" type="button" >Show All Offer</button>
+         
             </div>
             
           </div>
@@ -65,7 +65,7 @@ dd<%- include ('./adminheader.ejs') %>
   <tbody>
   
   <% for(i=0;i<result.length;i++) { %>
-  table+=`<tr>
+ <tr>
   <td>
   <img src="/images/<%=result[i].image%>" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
   </td>
@@ -74,7 +74,7 @@ dd<%- include ('./adminheader.ejs') %>
   <td>
   <input type='checkbox' class = 'pr' name = 'products[]' id='products' value="<%=result[i].id%>">
   </td>
-  </tr>`
+  </tr>
 <% } %>
  </tbody>
   </table>
@@ -216,6 +216,9 @@ return false;
 
 $('#next').click(function(){
    
+
+if($(''))
+
     let bannerid = $('#bannerid').val()
     let productid =$('#products:checked').val();
 
@@ -226,9 +229,11 @@ $('#next').click(function(){
                
     console.log('products',a)
 
+    let b = JSON.stringify(a)
 
 
-    $.post('/banner/management/insert',{bannerid,a},data=>{
+
+    $.post('/banner/management/insert',{bannerid,b},data=>{
         alert('Created Successfully')
     })
 

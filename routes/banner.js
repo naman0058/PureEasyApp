@@ -4,6 +4,8 @@ var upload = require('./multer');
 var pool = require('./pool')
 var table = 'banner';
 const fs = require("fs");
+const app = require('../app');
+const { json } = require('express');
 
 
 
@@ -165,6 +167,36 @@ router.post('/update_image',upload.single('image'), (req, res) => {
 
   
    
+})
+
+
+router.post('/management/insert',(req,res)=>{
+    let body = req.body;
+    console.log(req.body)
+
+    let c = JSON.parse(req.body.b)
+
+    console.log('c',c)
+    for(i=0;i<c.length;i++){
+        let d = c[i]
+        pool.query(`select * from banner_manage where bannerid = '${req.body.bannerid}' and productid = '${d}'`,(err,result)=>{
+            if(err) throw err;
+            else if(result[0]) {
+                           
+            }
+            else{
+                pool.query(`insert into banner_manage(bannerid , productid) values('${req.body.bannerid}' , '${d}')`,(err,result)=>{
+                    if(err) throw err;
+                    else {
+
+                    }
+                })
+            }
+        })
+    }
+    res.json({
+        msg : 'success'
+    })
 })
 
 
