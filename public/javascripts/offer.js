@@ -13,6 +13,30 @@ $.getJSON(`${table}/all`, data => {
 
 })
 
+
+
+$.getJSON(`banner/all`, data => {
+    categories = data
+    fillDropDown('bannerid', data, 'Choose Banner Name', 0)
+  
+})
+
+
+function fillDropDown(id, data, label, selectedid = 0) {
+    $(`#${id}`).empty()
+    $(`#${id}`).append($('<option>').val("null").text(label))
+
+    $.each(data, (i, item) => {
+        if (item.id == selectedid) {
+            $(`#${id}`).append($('<option selected>').val(item.id).text(item.name))
+        } else {
+            $(`#${id}`).append($('<option>').val(item.id).text(item.name))
+        }
+    })
+}
+
+
+
 function makeTable(categories){
       let table = ` <div class="table-responsive">
 

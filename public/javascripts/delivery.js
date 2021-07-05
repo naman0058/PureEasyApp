@@ -35,9 +35,23 @@ table+=`<tr>
 <td>${item.name}</td>
 <td>${item.number}</td>
 <td>
+<a href="#!" class="btn btn-info btn-sm details" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;View Details </a>
+
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
-</td>
+</td>`
+if(item.status=='Block'){
+
+table+= `<td><a href="#!" class="btn btn-danger btn-sm unblock" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Unblock </a></td>`
+}
+else {
+    table+= `<td><a href="#!" class="btn btn-warning btn-sm block" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Block </a></td>`
+
+}
+
+
+
+table+=`
 </tr>`
 })
 table+=`</tbody>
@@ -57,6 +71,29 @@ $('#result').on('click', '.deleted', function() {
      $.get(`${table}/delete`,  { id }, data => {
         refresh()
     })
+})
+
+
+
+$('#result').on('click', '.block', function() {
+    const id = $(this).attr('id')
+    const status = 'Block'
+   
+          $.post(`${table}/update`, {id,status} , function(data) {
+           update()
+        })
+ 
+})
+
+
+
+$('#result').on('click', '.unblock', function() {
+    const id = $(this).attr('id')
+    const status = ''
+   
+    $.post(`${table}/update`, {id,status} , function(data) {
+     update()
+  })
 })
 
 

@@ -4,6 +4,7 @@ var upload = require('./multer');
 var pool = require('./pool')
 var table = 'category';
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 
 var today = new Date();
@@ -828,4 +829,312 @@ router.post('/mywishlist',(req,res)=>{
 
 
 
+
+
+
+
+
+
+router.get('/search',(req,res)=>{
+   var query = `select * from product where keyword Like '%${req.query.search}%';`
+    pool.query(query,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+    })
+})
+
+
+
+
+
+
+
+router.get('/get-address',(req,res)=>{
+  pool.query(`select * from address where usernumber = '${req.query.usernumber}'`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+  })
+})
+
+
+
+router.post('/save-address',(req,res)=>{
+  let body = req.body;
+  console.log('body h',req.body)
+  pool.query(`insert into address set ?`,body,(err,result)=>{
+      if(err) throw err;
+      else res.json({
+          msg : 'success'
+      })
+  })
+})
+
+
+
+
+router.get('/delete-address',(req,res)=>{
+  pool.query(`delete from address where id = '${req.query.id}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json({msg:'success'})
+  })
+})
+
+
+
+router.get('/get-single-address',(req,res)=>{
+  pool.query(`select * from address where id = '${req.query.id}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+router.post('/update-address', (req, res) => {
+  pool.query(`update address set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully update'
+          })
+
+          
+      }
+  })
+})
+
+
+
+
+router.get('/get-single-profile',(req,res)=>{
+  pool.query(`select * from users where id = '${req.query.usernumber}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+router.post('/update-profile', (req, res) => {
+  pool.query(`update users set ? where number = ?`, [req.body, req.body.usernumber], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully update'
+          })
+
+          
+      }
+  })
+})
+
+
+
+
+router.get('/get-notification',(req,res)=>{
+  pool.query(`select * from offer  where type = 'notification' order by id desc`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+  })
+})
+
+
+
+
+router.get('/get-alert',(req,res)=>{
+  pool.query(`select * from offer  where type = 'alert' order by id desc limit 1`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+  })
+})
+
+
+
+
+
+
+
+router.post("/payment-initiate", (req, res) => {
+  const url = `https://rzp_live_wdTkjI7Ba4b5qN:rxR0Prlwb9Gz7HctbrpukFOe@api.razorpay.com/v1/orders/`;
+  const data = {
+    amount: req.body.amount * 100, // amount in the smallest currency unit
+    //amount:100,
+    currency: "INR",
+    payment_capture: true,
+  };
+  console.log("data", data);
+  const options = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  fetch(url, options)
+    .then((res) => res.json())
+    .then((resu) => res.send(resu));
+});
+
+router.get("/demo", (req, res) => {
+  res.render("dem");
+});
+
+router.get("/demo1", (req, res) => {
+  console.log(req.query);
+  res.send(req.query);
+});
+
+router.post("/razorpay-response", (req, res) => {
+  let body = req.body;
+  console.log("response recieve", body);
+
+  if (body.razorpay_signature) {
+    res.redirect("/api/success_razorpay");
+  } else {
+    res.redirect("/api/failed_payment");
+  }
+});
+
+router.get("/success_razorpay", (req, res) => {
+  res.json({
+    msg: "success",
+  });
+});
+
+router.get("/failed_payment", (req, res) => {
+  res.json({
+    msg: "failed",
+  });
+});
+
+router.post("/failed_payment", (req, res) => {
+  res.json({
+    msg: "failed",
+  });
+});
+
+
+
+
+
+
+
+
+router.post('/deposit-cash',(req,res)=>{
+  let body = req.body
+  let extra = 0;
+  let bonus = 0;
+  console.log(req.body)
+ 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  
+  today = mm + '/' + dd + '/' + yyyy;
+
+
+
+  body['date'] = today
+  console.log('response',req.body)
+
+pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err,result)=>{
+  if(err) throw err;
+ 
+  else{
+
+      pool.query(`insert into deposit_cash set ?`,req.body , (err,result)=>{
+          if(err) throw err;
+          else {
+              pool.query(`update users set deposit_cash = deposit_cash+${req.body.amount} where number = '${req.body.number}'`,(err,result)=>{
+                   if(err) throw err;
+                   else {
+                       pool.query(`insert into transcations (name , number , date , amount , color , sign) values('Deposit Cash','${req.body.number}','${req.body.date}', '${req.body.amount}','green','+')`,(err,result)=>{
+                           if(err) throw err;
+                           else {
+                            res.json({
+                                msg :'success'
+                            })
+                        }
+                       })
+  
+                   }
+              })
+          }
+      })
+      
+      
+      
+     
+
+  }
+})
+
+  
+      })
+
+
+
+
+
+      router.post('/transcations',(req,res)=>{
+        pool.query(`select * from transcations where number='${req.body.number}' order by id desc limit 30`,(err,result)=>{
+            if(err) throw err;
+            else {
+                res.json({
+                    result
+                })
+            }
+        })
+    })
+
+
+
+    router.post('/transcations-by-date',(req,res)=>{
+      pool.query(`select * from transcations where number='${req.body.number}' and date between '${req.body.from_date}' and '${req.body.to_date}' order by date desc `,(err,result)=>{
+          if(err) throw err;
+          else {
+              res.json({
+                  result
+              })
+          }
+      })
+  })
+
+
+
+  router.post('/total-amount',(req,res)=>{
+    pool.query(`select sum(price) as total_amount from cart where usernumber = '${req.body.number}'`,(err,result)=>{
+          if(err) throw err;
+          else res.json(result)
+    })
+  })
+
+
+
 module.exports = router;
+
+
+
+
+// remaining api
+
+// coupon , subcategory , faq (both) , product description , refer & earn , single-booking , 
