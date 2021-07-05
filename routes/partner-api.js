@@ -151,7 +151,9 @@ router.post('/total-booking',(req,res)=>{
 router.post('/update-booking-status',(req,res)=>{
     pool.query(`update booking set status = 'NOt Delivered' , reason = '${req.body.reason}' where id = '${req.body.id}'`,(err,result)=>{
         if(err) throw err;
-        else res.json(result)
+        else res.json({
+            msg : 'success'
+        })
     })
 })
 
