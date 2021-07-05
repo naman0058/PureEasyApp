@@ -1170,6 +1170,28 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
   })
 
 
+
+
+
+
+
+
+
+
+
+
+router.post('/update-booking-status',(req,res)=>{
+    pool.query(`update booking set status = '${req.body.status}' where id = '${req.body.id}'`,(err,result)=>{
+        if(err) throw err;
+        else res.json(result)
+    })
+})
+
+
+
+
+
+
 module.exports = router;
 
 

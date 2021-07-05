@@ -34,7 +34,7 @@ router.post('/all-orders',(req,res)=>{
 
 
 router.post('/ongoing-orders',(req,res)=>{
-  pool.query(`select * from ${table} where partner_number = '${req.body.number}' and status != 'completed'`,(err,result)=>{
+  pool.query(`select * from ${table} where partner_number = '${req.body.number}' and status != 'completed' and status!= 'cancel;'`,(err,result)=>{
     if(err) throw err;
     else res.json(result)
   })
@@ -143,5 +143,22 @@ router.post('/total-booking',(req,res)=>{
         }
     })
 })
+
+
+
+
+
+router.post('/update-booking-status',(req,res)=>{
+    pool.query(`update booking set status = 'NOt Delivered' , reason = '${req.body.reason}' where id = '${req.body.id}'`,(err,result)=>{
+        if(err) throw err;
+        else res.json(result)
+    })
+})
+
+
+
+
+
+
 
 module.exports = router;
