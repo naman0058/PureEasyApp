@@ -1130,6 +1130,46 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
 
+
+  router.post('/single-booking-details',(req,res)=>{
+    pool.query(`select * from booking where id = '${req.body.booking_id}'`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+    })
+  })
+
+
+
+
+  router.post('/general-faq',(req,res)=>{
+    pool.query(`select * from faq where type = 'General Question'`,(err,result)=>{
+       if(err) throw err;
+       else res.json(result)
+    })
+  })
+
+
+
+  
+  router.post('/wallet-faq',(req,res)=>{
+    pool.query(`select * from faq where type = 'Wallet Question'`,(err,result)=>{
+       if(err) throw err;
+       else res.json(result)
+    })
+  })
+
+
+
+
+
+  router.get('/new-subcategory',(req,res)=>{
+    pool.query(`select * from subcategory where categoryid = '${req.body.categoryid}'`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+    })
+  })
+
+
 module.exports = router;
 
 
@@ -1137,4 +1177,4 @@ module.exports = router;
 
 // remaining api
 
-// coupon , subcategory , faq (both) , product description , refer & earn , single-booking , 
+// coupon  , refer & earn , 

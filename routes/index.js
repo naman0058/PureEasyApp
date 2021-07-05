@@ -570,7 +570,7 @@ router.get('/search',(req,res)=>{
 
 if(req.session.usernumber){
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where keyword Like '%${req.query.search}%';`
+  var query1 = `select * from product where keywords Like '%${req.query.search}%';`
   pool.query(query+query1,(err,result)=>{
     if(err) throw err;
     else if(result[1][0]){
@@ -581,7 +581,7 @@ if(req.session.usernumber){
 }
 else{
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where keyword Like '%${req.query.search}%';`
+  var query1 = `select * from product where keywords Like '%${req.query.search}%';`
   pool.query(query+query1,(err,result)=>{
     if(err) throw err;
     else if(result[1][0]){
