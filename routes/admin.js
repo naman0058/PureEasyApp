@@ -102,6 +102,30 @@ router.get('/update-status',(req,res)=>{
 })
 
 
+router.post('/update/booking/status',(req,res)=>{
+    pool.query(`update booking set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+
+    if(err) {
+        res.json({
+            status:500,
+            type : 'error',
+            description:err
+        })
+    }
+    else {
+        res.json({
+            status:200,
+            type : 'success',
+            description:'successfully update'
+        })
+
+        
+    }
+
+})
+
+})
+
 
 
 
