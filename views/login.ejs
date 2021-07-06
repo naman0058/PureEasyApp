@@ -1,5 +1,5 @@
-<%- include ('./indexheader.ejs') %>    
-
+<%- include ('./indexheader.ejs') %>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
     <!-- main content start -->
 
@@ -8,10 +8,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center">
+                    <!-- <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">login & register</li>
-                    </ol>
+                    </ol> -->
                 </div>
             </div>
         </div>
@@ -21,13 +21,18 @@
     <div class="login-register-area section-mb">
         <div class="container">
             <div class="row">
+
+
+
                 <div class="col-lg-7 col-md-12 mx-auto">
                     <div class="login-register-wrapper">
+                        <img src="/images/logo.png" style="width:237px; margin-left: 262px;" alt="images_not_found">
                         <div class="login-register-tab-list nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="active" data-bs-toggle="tab" href="#lg1">
-                                <h4>login/Register</h4>
+
+                                <h4 style="margin-top: 15px;">login/Register</h4>
                             </a>
-                           
+
                         </div>
 
                         <div class="tab-content">
@@ -35,16 +40,11 @@
                                 <div class="login-form-container">
                                     <div class="login-register-form">
                                         <form action="/login/verification" method="post">
-                                            <input type="number" name="number" placeholder="Mobile Number" required>
-                                           
-                                            <div class="button-box">
-                                               
-                                                <button type="submit" class="btn btn-dark">Login</button>
-                                                <!-- <a type="submit" class="btn btn-dark">
-                                                    <span>Login</span>
-                                                </a> -->
-                                            </div>
-                                        </form>
+                                            <h4> Please Enter Mobile Number</h4>
+                                            <input type="number" name="number" placeholder="9999999999" required>
+                                                <button type="submit" class="btn btn-dark pt-4 pb-4">Send OTP</button>&nbsp;&nbsp;
+                                                <button class="btn btn-dark ml-3"><i class="fab fa-google-plus" style="margin-right: 12px; font-size: 20px;"></i>LOGIN GOOGLE</button>
+                                            </form>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
     </div>
 
     <!-- news letter section start -->
- 
+
     <!-- news letter section end -->
 
 
@@ -123,5 +123,4 @@
 
     <!-- main content end -->
 
-<%- include ('./indexfooter.ejs') %>    
-   
+    <%- include ('./indexfooter.ejs') %>

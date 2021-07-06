@@ -521,7 +521,7 @@ router.post('/orders',(req,res)=>{
 
 
 router.get('/time',(req,res)=>{
-    pool.query(`select * from time where date>= CURDATE()`,(err,result)=>{
+    pool.query(`select * from time where date>= CURDATE() and status = 'Available'`,(err,result)=>{
         if(err) throw err;
         else res.json(result)
     })
@@ -1169,6 +1169,8 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
     })
   })
 
+  
+
 
 
 
@@ -1188,6 +1190,26 @@ router.post('/update-booking-status',(req,res)=>{
 })
 
 
+
+
+
+
+router.get('/view-all-product',(req,res)=>{
+  var query = `select t.* ,   
+    (select p.name from product p where p.id = t.productid) as productname,
+    (select p.price from product p where p.id = t.productid) as productprice,
+    (select p.quantity from product p where p.id = t.productid) as productquantity,
+    (select p.discount from product p where p.id = t.productid) as productdiscount,
+    (select p.image from product p where p.id = t.productid) as productimage,
+    (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
+    (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
+    (select p.net_amount from product p where p.id = t.productid) as productnetamount 
+    from banner_management t where t.bannerid = '${req.query.id}' `
+    pool.query(query,(err,result)=>{
+      if(err) throw err;
+     else res.json(result)
+    })
+})
 
 
 

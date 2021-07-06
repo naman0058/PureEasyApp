@@ -44,6 +44,53 @@ router.get('/management',(req,res)=>{
 
 
 
+
+
+
+
+
+
+router.get('/new-promotional-text',(req,res)=>{
+    if(req.session.adminid){
+    res.render('new-promotional-text')
+    }
+    else{
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+})
+
+
+
+router.post('/promotional/text/insert',upload.single('image'),(req,res)=>{
+    let body = req.body
+    body['image'] = req.file.filename;
+    pool.query(`insert into promotional_text set ?`,body,(err,result)=>{
+        if(err) throw err;
+        else res.json(result)
+    })
+})
+
+
+
+
+router.get('/promotional-text-management',(req,res)=>{
+    if(req.session.adminid){
+        pool.query(`select * from product order by name desc`,(err,result)=>{
+            if(err) throw err;
+            else res.render('promotional-text-management',{result})
+        })
+        
+    }
+    else {
+        res.render('admin_login',{msg:'Please Login First'})
+    }
+  // res.render('category')
+    
+})
+
+
+
+
 router.post('/storeEditId',(req,res)=>{
     req.session.editStoreId = req.body.id
     res.send('success')
@@ -76,6 +123,16 @@ router.post('/insert',upload.single('image'),(req,res)=>{
 
 router.get('/all',(req,res)=>{
 	pool.query(`select * from ${table} `,(err,result)=>{
+		if(err) throw err;
+        else res.json(result)
+	})
+})
+
+
+
+
+router.get('/all/promotional/text',(req,res)=>{
+	pool.query(`select * from promotional_text `,(err,result)=>{
 		if(err) throw err;
         else res.json(result)
 	})
@@ -186,6 +243,40 @@ router.post('/management/insert',(req,res)=>{
             }
             else{
                 pool.query(`insert into banner_manage(bannerid , productid) values('${req.body.bannerid}' , '${d}')`,(err,result)=>{
+                    if(err) throw err;
+                    else {
+
+                    }
+                })
+            }
+        })
+    }
+    res.json({
+        msg : 'success'
+    })
+})
+
+
+
+
+
+
+router.post('/promotional/management/insert',(req,res)=>{
+    let body = req.body;
+    console.log(req.body)
+
+    let c = JSON.parse(req.body.b)
+
+    console.log('c',c)
+    for(i=0;i<c.length;i++){
+        let d = c[i]
+        pool.query(`select * from promotional_text_management where bannerid = '${req.body.bannerid}' and productid = '${d}'`,(err,result)=>{
+            if(err) throw err;
+            else if(result[0]) {
+                           
+            }
+            else{
+                pool.query(`insert into promotional_text_management(bannerid , productid) values('${req.body.bannerid}' , '${d}')`,(err,result)=>{
                     if(err) throw err;
                     else {
 

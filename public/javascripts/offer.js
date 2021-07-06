@@ -22,6 +22,14 @@ $.getJSON(`/banner/all`, data => {
 })
 
 
+
+$.getJSON(`/banner/all/promotional/text`, data => {
+    categories1 = data
+    fillDropDown('text_id', data, 'Choose Promotional Text Name', 0)
+  
+})
+
+
 function fillDropDown(id, data, label, selectedid = 0) {
     $(`#${id}`).empty()
     $(`#${id}`).append($('<option>').val("null").text(label))

@@ -9,10 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">cart page </li>
-                    </ol>
+                   
                 </div>
             </div>
         </div>
@@ -64,7 +61,7 @@
 
                                 <tr>
                                     <th class="text-center" scope="row">
-                                        <img src="/images/<%=result[1][i].image%>" alt="img">
+                                        <img src="/images/<%=result[1][i].bookingimage%>" alt="img" style="height: 100px;">
                                     </th>
                                     <td class="text-center">
                                         <span class="whish-title"><%=result[1][i].bookingname%></span>
@@ -78,10 +75,10 @@
                                                 <input type="number" min="1" max="100" step="1" value="<%=result[1][i].quantity%>">
                                                 <div class="button-group">
                                                     <button class="count-btn increment">
-                                                        <span class="las la-angle-up add" categoryid="<%=result[1][i].categoryid%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>"  value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span>
+                                                        <span class="las la-angle-up add" categoryid="<%=result[1][i].categoryid%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" availablequantity="<%=result[1][i].availablequantity%>"  value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span>
                                                     </button>
                                                     <button class="count-btn decrement">
-                                                        <span class="las la-angle-down minus" categoryid="<%=result[1][i].categoryid%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span></span>
+                                                        <span class="las la-angle-down minus" categoryid="<%=result[1][i].categoryid%>" availablequantity="<%=result[1][i].availablequantity%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span></span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -209,15 +206,24 @@
      let booking_id = $(this).attr('booking_id');
      let usernumber = $(this).attr('number');
      let categoryid = $(this).attr('categoryid');
+     let availablequantity = $(this).attr('availablequantity')
 
     
     
     
      let quantity = (+value)+1;
-    
+
+
+     if(quantity>availablequantity){
+      alert(`We have only ${availablequantity} stocks available`)
+     }
+     else{
         $.post('/cart-handler',{quantity,price,booking_id,usernumber,categoryid},data=>{
                 window.location.href = '/mycart'
           })
+     }
+    
+     
     
          
         })

@@ -10,10 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Warburtons 9 Crumpets </li>
-                    </ol>
+                   
                 </div>
             </div>
         </div>
@@ -32,13 +29,13 @@
                             <div class="swiper-container">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide gallery-item">
-                                        <img src="a/images/<%=result[1][0].image%>" alt="image_not_found">
+                                        <img src="/images/<%=result[1][0].image%>" alt="image_not_found" style="height:200px">
                                     </div>
                                     <div class="swiper-slide gallery-item">
-                                        <img src="/images/<%=result[1][0].image1%>" alt="image_not_found">
+                                        <img src="/images/<%=result[1][0].image1%>" alt="image_not_found" style="height:200px">
                                     </div>
                                     <div class="swiper-slide gallery-item">
-                                        <img src="/images/<%=result[1][0].image2%>" alt="image_not_found">
+                                        <img src="/images/<%=result[1][0].image2%>" alt="image_not_found" style="height:200px">
                                     </div>
                                  
 
@@ -52,14 +49,14 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide gallery-thumbs-item">
                                         <a href="#?">
-                                            <img src="/images/<%=result[1][0].image%>" alt="image_not_found">
+                                            <img src="/images/<%=result[1][0].image%>" alt="image_not_found" style="height:200px">
                                         </a>
                                     </div>
                                     <div class="swiper-slide gallery-thumbs-item">
-                                        <a href="#?"> <img src="/images/<%=result[1][0].image1%>" alt="image_not_found"></a>
+                                        <a href="#?"> <img src="/images/<%=result[1][0].image1%>" alt="image_not_found" style="height:200px"></a>
                                     </div>
                                     <div class="swiper-slide gallery-thumbs-item">
-                                        <a href="#?"> <img src="/images/<%=result[1][0].image2%>" alt="image_not_found"></a>
+                                        <a href="#?"> <img src="/images/<%=result[1][0].image2%>" alt="image_not_found" style="height:200px"></a>
                                     </div>
                                    
 
@@ -83,11 +80,23 @@
 
                         </div> -->
 
-                        <div class="product-price-wrapp-lg">
-                            <span class="product-regular-price-lg">Rs. <%=result[1][0].price%></span>
-                            <span class="product-price-on-sale-lg">Rs. <%=result[1][0].net_amount%></span>
-                            <span class="badge badge-lg bg-dark">Save <%=result[1][0].discount%> %</span>
-                        </div>
+
+                        <% if(result[1][0].discount == 0) { %>
+
+                            <div class="product-price-wrapp-lg">
+                                
+                                <span class="product-price-on-sale-lg">Rs. <%=result[1][0].net_amount%></span>
+                        
+                            </div>
+
+                        <% } else { %>
+
+                            <div class="product-price-wrapp-lg">
+                                <span class="product-regular-price-lg">Rs. <%=result[1][0].price%></span>
+                                <span class="product-price-on-sale-lg">Rs. <%=result[1][0].net_amount%></span>
+                                <span class="badge badge-lg bg-dark">Save <%=result[1][0].discount%> %</span>
+                            </div>
+                            <% } %>
 
                         <div class="product-description-short pb-7 mb-7">
                             <ul>
@@ -103,31 +112,58 @@
                         </div>
 
                        
+                        <% if(result[1][0].quantity == 0 || result[1][0].quantity < 0) { %>
 
-                        <div class="product-add-to-cart">
-                            <span class="control-label">Quantity</span>
-
-                            <div class="product-count style d-flex my-7">
-                                <div class="count d-flex">
-                                    <input type="number" min="1" max="100" step="1" value="1" id="userquantity">
-                                    <div class="button-group">
-                                        <button class="count-btn increment">
-                                            <span class="las la-angle-up"></span>
+                            <div class="product-add-to-cart">
+                              
+    
+                                <div class="product-count style d-flex my-7">
+                                   
+                                    <div>
+                                      
+    
+                                        <button  data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="modal-add-to-cart-btn">
+                                           Out Of Stock
                                         </button>
-                                        <button class="count-btn decrement">
-                                            <span class="las la-angle-down"></span>
-                                        </button>
+                                       
                                     </div>
                                 </div>
-                                <div>
-                                    <button  id="addToCart" subcategoryid="<%=result[1][0].subcategoryid%>"  booking_id="<%=result[1][0].id%>" price="<%=result[1][0].net_amount%>" categoryid = '<%=result[1][0].categoryid%>' data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="modal-add-to-cart-btn">
-                                        Add to cart
-                                    </button>
-                                </div>
+                              
+    
                             </div>
-                          
+                            <% } else { %>
 
-                        </div>
+                                <div class="product-add-to-cart">
+                                    <span class="control-label">Quantity</span>
+        
+                                    <div class="product-count style d-flex my-7">
+                                        <div class="count d-flex">
+                                            <input type="number" min="1" max="100" step="1" value="1" id="userquantity">
+                                            <div class="button-group">
+                                                <button class="count-btn increment">
+                                                    <span class="las la-angle-up"></span>
+                                                </button>
+                                                <button class="count-btn decrement">
+                                                    <span class="las la-angle-down"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                          
+        
+                                            <button  id="addToCart" subcategoryid="<%=result[1][0].subcategoryid%>"  booking_id="<%=result[1][0].id%>" price="<%=result[1][0].net_amount%>" categoryid = '<%=result[1][0].categoryid%>' totalquantity = '<%=result[1][0].quantity%>' data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="modal-add-to-cart-btn addToCart">
+                                                Add to cart
+                                            </button>
+                                           
+                                        </div>
+                                    </div>
+                                  
+        
+                                </div>
+
+                                <% } %>
+
+                      
 
                     </div>
                 </div>
@@ -153,40 +189,70 @@
                     <div class="new-arrival-carousel">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
+
+
+
+<% for(i=0;i<result[3].length;i++) { %>
+
                                 <!-- swiper-slide start -->
+                              
+                              
                                 <div class="new-arrival-carousel-item swiper-slide">
                                     <!-- product-card-list start -->
                                     <div class="product-card-list">
                                         <!-- product-card start -->
                                         <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
+                                          
                                             <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-1.jpg" alt="image_not_found" />
+                                                <a href="/product?id=<%=result[3][i].id%>">
+                                                    <img class="product-image" src="/images/<%=result[3][i].image%>" alt="image_not_found" style="height: 200px;" />
                                                 </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
+                                               
                                             </div>
                                             <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Warburtons 9 Crumpets</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
+                                            
+                                                <h3 class="product-title"><a href="/product?id=<%=result[3][i].id%>"><%=result[3][i].name%></a></h3>
+
+
+                                                <% if(result[3][i].discount == 0) { %>
+
+                                                    <div class="product-price-wrapp">
+                                                       
+                                                        <span class="product-price-on-sale">Rs. <%=result[3][i].net_amount%></span>
+                                                      
+                                                    </div>
+                                                    <% } else { %>
+                                                        <div class="product-price-wrapp">
+                                                            <span class="product-regular-price">Rs. <%=result[3][i].price%></span>
+                                                            <span class="product-price-on-sale">Rs. <%=result[3][i].net_amount%></span>
+                                                            <span class="badge bg-success"><%=result[3][i].discount%> %</span>
+                                                        </div>
+
+                                                        <% } %>
+
+
+
+                                                        <% if(result[3][i].quantity == 0 || result[3][i].quantity < 0) { %>
+
+                                                            <div class="product-cart-btn-wrap">
+                                                                <button     data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="btn btn-dark add-to-cart-btn ">Out Of Stock</button>
+                                                            </div>
+
+                                                        <% } else { %>
+                                                            <div class="product-cart-btn-wrap">
+                                                                <button id="addToCart" subcategoryid="<%=result[3][i].subcategoryid%>"  booking_id="<%=result[3][i].id%>" price="<%=result[3][i].net_amount%>" categoryid = '<%=result[3][i].categoryid%>'  data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="btn btn-dark add-to-cart-btn addToCart">Add to cart</button>
+                                                            </div>
+
+                                                            <% } %>
+
+                                                    
+                                              
+                                                
+                                                  
+                                                    <!-- <button  id="addToCart" subcategoryid="<%=result[3][i].subcategoryid%>"  booking_id="<%=result[3][i].id%>" price="<%=result[3][i].net_amount%>" categoryid = '<%=result[3][i].categoryid%>' data-bs-toggle="modal" data-bs-target="#addto-cart-modal" class="modal-add-to-cart-btn">
+                                                        Add to cart
+                                                    </button> -->
+                                               
                                             </div>
                                         </div>
                                         <!-- product-card end -->
@@ -196,268 +262,10 @@
 
                                 </div>
                                 <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-2.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-2.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Fruits</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Walkers Meaty Variety Crisps</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-danger">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
 
-                                    <!-- product-card-list end -->
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-3.jpg" alt="image_not_found" />
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Snacking Essentials Cashew</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-4.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-4.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Salad Selection Pack</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-5.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-5.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Pink Lady Apples 4 Pack</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-
-                                </div>
-                                <!-- swiper-slide end-->
-
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-11.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-11.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">lorette Sweet & Crunchy</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="new-arrival-carousel-item swiper-slide">
-
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-12.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-12.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Fruits</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Gilfresh Soup Vegetables</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-danger">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
+                                <% } %>
+                            
+                                
                             </div>
 
                         </div>
@@ -480,341 +288,7 @@
 
     <!-- featured carousel section start -->
 
-    <section class="featured-carousel-section section-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2 class="title">16 other products in:</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="featured-carousel">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-1.jpg" alt="image_not_found" />
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Warburtons 9 Crumpets</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-2.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-2.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Fruits</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Walkers Meaty Variety Crisps</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-danger">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-3.jpg" alt="image_not_found" />
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Snacking Essentials Cashew</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-4.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-4.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Salad Selection Pack</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-5.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-5.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Pink Lady Apples 4 Pack</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-success">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-
-                                </div>
-                                <!-- swiper-slide end-->
-
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-11.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-11.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Vegetables</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">lorette Sweet & Crunchy</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                                <!-- swiper-slide start -->
-                                <div class="featured-carousel-item swiper-slide">
-
-                                    <!-- product-card-list start -->
-                                    <div class="product-card-list">
-                                        <!-- product-card start -->
-                                        <div class="product-card">
-                                            <span class="badge bg-success product-badge">new</span>
-                                            <div class="product-thumb-nail">
-                                                <a href="single-product.html">
-                                                    <img class="product-image" src="assets/images/products/product-12.jpg" alt="image_not_found">
-                                                    <img class="product-image-hover-style" src="assets/images/products/product-12.1.jpg" alt="image_not_found">
-                                                </a>
-                                                <ul class="actions">
-                                                    <li class="action whish-list">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-wishlist"><i class="lar la-heart"></i></button>
-                                                    </li>
-                                                    <li class="action compare">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal-compare"><i class="las la-sync"></i></button>
-                                                    </li>
-                                                    <li class="action quick-view">
-                                                        <button data-bs-toggle="modal" data-bs-target="#product-modal"><i class="las la-eye"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-content">
-                                                <h4 class="product-sub-title"><a href="#">Fresh Fruits</a></h4>
-                                                <h3 class="product-title"><a href="single-product.html">Gilfresh Soup Vegetables</a></h3>
-                                                <div class="product-price-wrapp">
-                                                    <span class="product-regular-price">€43.80</span>
-                                                    <span class="product-price-on-sale">€39.42</span>
-                                                    <span class="badge bg-danger">-20%</span>
-                                                </div>
-                                                <div class="product-cart-btn-wrap">
-                                                    <button class="btn btn-dark add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#addto-cart-modal">Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-card end -->
-                                    </div>
-                                    <!-- product-card-list end -->
-
-                                </div>
-                                <!-- swiper-slide end-->
-                            </div>
-
-                        </div>
-
-                        <!-- swiper navigation -->
-                        <div class="swiper-button-prev common-swiper-button-prev">
-                            <i class="las la-angle-left"></i>
-                        </div>
-                        <div class="swiper-button-next common-swiper-button-next">
-                            <i class="las la-angle-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- featured carousel section end -->
 
     <!-- news letter section start -->
@@ -904,7 +378,7 @@
     
 <script>
 
-$('#addToCart').click(function(){
+$('.addToCart').click(function(){
 			
             // id="<%=result[1][0].id%>" price="<%=result[1][0].net_amount%>" categoryid = '<%=result[1][0].categoryid%>' vendorid = '<%=result[1][0].vendorid%>' 
             let quantity = $('#userquantity').val()
@@ -913,15 +387,25 @@ $('#addToCart').click(function(){
             let oneprice = $(this).attr('price');
             let categoryid = $(this).attr('categoryid');
             let subcategoryid = $(this).attr('subcategoryid');
+            let totalquantity = $(this).attr('totalquantity');
 
             // let vendorid = $(this).attr('vendorid');
+
+
+            if(quantity > totalquantity){
+                
+                alert(`We have only ${totalquantity} stock availbale`)
+            }
         
+            else {
+                price = price*quantity
         
-             price = price*quantity
+        $.post('/cart-handler',{booking_id,price,categoryid,oneprice,quantity,subcategoryid},data=>{
+            createAlert('','Nice Work!','Here is a bunch of text about some stuff that happened.','success',true,true,'pageMessages')
+        })  
+            }
         
-            $.post('/cart-handler',{booking_id,price,categoryid,oneprice,quantity,subcategoryid},data=>{
-                createAlert('','Nice Work!','Here is a bunch of text about some stuff that happened.','success',true,true,'pageMessages')
-            })
+             
             
         })
 
