@@ -188,6 +188,7 @@
                         <th>Customer Number</th>
                         <th>Product Name</th>
                         <th>Address</th>
+                        <th>Payment Mode</th>
                         <th>Progress</th>
                         <th>Price</th>
                         <th>Assign</th>
@@ -202,9 +203,13 @@
                        
                         <td><%=result[8][i].name%></td>
                         <td><%=result[8][i].number%></td>
-                        <td class="font-weight-600"><%=result[8][i].booking_id%></td>
+                        <td class="font-weight-600"><%=result[8][i].productname%></td>
                         <td class="font-weight-600"><%=result[8][i].address%></td>
+                        <td class="font-weight-600"><%=result[8][i].payment_mode%></td>
+
                         <td class="font-weight-600"><%=result[8][i].status%></td>
+                        
+
                        
                         <td>Rs. <%=result[8][i].price%></td>
 

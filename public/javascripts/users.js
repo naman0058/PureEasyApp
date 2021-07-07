@@ -7,18 +7,21 @@ let name = $('#name123').val()
 // alert(name)
 
   
-$.getJSON(`${table}/${name}`, data => {
+$.getJSON(`/${table}/${name}`, data => {
     categories = data
     makeTable(data)
     
   
 })
 
-function makeTable(categories){
-      let table = ` <div class="table-responsive">
+document.write('<script type="text/javascript" src="/javascripts/common.js" ></script>');
 
-     
-<table id="report-table" class="table table-bordered table-striped mb-0">
+function makeTable(categories){
+    let table = ` <div class="table-responsive">
+
+    <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;margin-top:20px'>
+              
+<table id="myTable" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
 

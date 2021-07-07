@@ -1204,7 +1204,7 @@ router.get('/view-all-product',(req,res)=>{
     (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
     (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
     (select p.net_amount from product p where p.id = t.productid) as productnetamount 
-    from banner_management t where t.bannerid = '${req.query.id}' `
+    from banner_manage t where t.bannerid = '${req.query.id}' `
     pool.query(query,(err,result)=>{
       if(err) throw err;
      else res.json(result)
@@ -1212,6 +1212,113 @@ router.get('/view-all-product',(req,res)=>{
 })
 
 
+
+router.get('/show-all-promotional-text',(req,res)=>{
+  pool.query(`select * from promotional_text order by id desc`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+
+router.get('/promotional/text/delete', (req, res) => {
+  let body = req.body
+  pool.query(`delete from promotional_text where id = ${req.query.id}`, (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully delete'
+          })
+      }
+  })
+})
+
+
+router.post('/promotional/text/update', (req, res) => {
+  pool.query(`update promotional_text set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully update'
+          })
+
+          
+      }
+  })
+})
+
+
+
+
+
+
+
+router.post('/promotional/text/update_image',upload.single('image'), (req, res) => {
+  let body = req.body;
+  body['image'] = req.file.filename
+
+
+pool.query(`update promotional_text set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          // res.json({
+          //     status:200,
+          //     type : 'success',
+          //     description:'successfully update'
+          // })
+
+          res.redirect('/banner/new-promotional-text')
+      }
+  })
+
+
+
+
+ 
+})
+
+
+
+
+router.get('/get-faq',(req,res)=>{
+  pool.query(`select * from faq order by id desc`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+router.get('/get-faq/delete',(req,res)=>{
+  pool.query(`delete from faq where id = '${req.query.id}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
 
 
 module.exports = router;

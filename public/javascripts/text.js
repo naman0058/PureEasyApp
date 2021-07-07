@@ -1,10 +1,10 @@
 let categories = []
 
-let table = 'size'
+let table = '/api/promotional/text'
 
 $('#show').click(function(){
   
-$.getJSON(`${table}/all`, data => {
+$.getJSON(`/api/show-all-promotional-text`, data => {
     categories = data
     makeTable(data)
     
@@ -13,20 +13,16 @@ $.getJSON(`${table}/all`, data => {
 
 })
 
-
-document.write('<script type="text/javascript" src="/javascripts/common.js" ></script>');
-
 function makeTable(categories){
-    let table = ` <div class="table-responsive">
+      let table = ` <div class="table-responsive">
 
-    <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
-    <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;'>
-              
-<table id="myTable" class="table table-bordered table-striped mb-0">
+      <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
+<table id="report-table" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
-<th>Size</th>
-<th>Quantity In</th>
+<th>Image</th>
+<th>Promotional Text</th>
+
 <th>Options</th>
 </tr>
 </thead>
@@ -34,12 +30,14 @@ function makeTable(categories){
 
 $.each(categories,(i,item)=>{
 table+=`<tr>
-
-<td>${item.name}</td>
-<td>${item.quantity_type}</td>
+<td>
+<img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
+</td>
+<td><a href ='/banner/promotional/details?id=${item.id}'>${item.name}</a></td>
 
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
+<a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
 </td>
 </tr>`
@@ -74,8 +72,8 @@ $('#result').on('click', '.edits', function() {
     $('#insertdiv').hide() 
     $('#pid').val(result.id)
     $('#pname').val(result.name)
-     $('#pquantity_type').val(result.quantity_type)
-  
+
+     $('#ptype').val(result.type)
    
  })
 
@@ -83,6 +81,7 @@ $('#result').on('click', '.edits', function() {
 
  $('#result').on('click', '.updateimage', function() {
     const id = $(this).attr('id')
+    
     const result = categories.find(item => item.id == id);
     $('#peid').val(result.id)
 })
@@ -93,9 +92,9 @@ $('#result').on('click', '.edits', function() {
 $('#update').click(function(){  //data insert in database
     let updateobj = {
         id: $('#pid').val(),
-        name: $('#pname').val(),
-        quantity_type:$('#pquantity_type').val(),
-     
+        name :$('#pname').val(),
+        type: $('#ptype').val(),
+       
         }
 
     $.post(`${table}/update`, updateobj , function(data) {
@@ -110,7 +109,7 @@ $('#update').click(function(){  //data insert in database
 
 function refresh() 
 {
-    $.getJSON(`${table}/all`, data => makeTable(data))
+    $.getJSON(`/api/show-all-promotional-text`, data => makeTable(data))
 }
 function update()
 {

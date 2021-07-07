@@ -62,7 +62,7 @@ function fillDropDown(id, data, label, selectedid = 0) {
 }
 
 $('#show').click(function(){
-$.getJSON(`/purchase-product/all`, data => {
+$.getJSON(`/api/get-faq`, data => {
     console.log(data)
     services = data
     makeTable(data)
@@ -84,16 +84,9 @@ function makeTable(categories){
 <table id="myTable" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
-<th>Product</th>
-<th>Short Name</th>
-<th>Category</th>
-<th>Subcategory</th>
-<th>Brand</th>
-<th>Price</th>
-<th>Discount</th>
-<th>Net Amount</th>
-<th>Quantity</th>
-<th>Image</th>
+<th>Type</th>
+<th>Questions</th>
+
 <th>Option</th>
 
 </tr>
@@ -103,21 +96,12 @@ function makeTable(categories){
 $.each(categories,(i,item)=>{
 table+=`<tr>
 
+<td>${item.type}</td>
 <td>${item.name}</td>
-<td>${item.short_name}</td>
-<td>${item.categoryname}</td>
-<td>${item.subcategoryname}</td>
-<td>${item.brandname}</td>
-<td>${item.price}</td>
-<td>${item.discount}</td>
-<td>${item.net_amount}</td>
-<th>${item.quantity}</td>
-<td>
-<img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
-</td>
+
+
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
-<a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
 </td>
 
@@ -139,7 +123,7 @@ table+=`</tbody>
 
 $('#result').on('click', '.deleted', function () {
     const id = $(this).attr('id')
-    $.get(`/purchase-product/delete`, { id }, data => {
+    $.get(`/get-faq/delete`, { id }, data => {
         refresh()
     })
 })
@@ -288,7 +272,7 @@ $('#new').mouseenter(function () {
  })
  
  function refresh() {
-     $.getJSON(`/purchase-product/all`, data => {
+     $.getJSON(`/api/get-faql`, data => {
          makeTable(data)
      })
  }

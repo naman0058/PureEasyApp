@@ -146,4 +146,13 @@ router.post('/update_image',upload.single('image'), (req, res) => {
 
 
 
+
+router.get('/details',(req,res)=>{
+    pool.query(`select b.* , (select p.name from product p where p.id = b.booking_id) as productname from booking b where b.assigned_number = '${req.query.number}'`,(err,result)=>{
+        if(err) throw err;
+        else res.render('delivery_details',{result})
+    })
+})
+
+
 module.exports = router;

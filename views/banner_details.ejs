@@ -15,14 +15,11 @@
                     <thead>
                     <tr>
                     
-                    <th>Name</th>
-                    <th>Number</th>
-                    <th>Address</th>
                     <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-                  <th>Status</th>
-                    <th>Date</th>
+                    <th>Product Price</th>
+                    <th>Stock</th>
+                    <th>Discount</th>
+                   
                     </tr>
                     </thead>
                     <tbody>
@@ -31,14 +28,11 @@
 
                         <% for(i=0;i<result.length;i++){ %>
                   <tr>
-                    <td><%=result[i].name%></td>
-                    <td><%=result[i].number%></td>
-                    <td><%=result[i].address%></td>
                     <td><%=result[i].productname%></td>
-                    <td><%=result[i].quantity%></td>
-                    <td><%=result[i].price%></td>
-                    <td><%=result[i].status%></td>
-                    <td><%=result[i].date%></td>
+                    <td><%=result[i].productprice%></td>
+                    <td><%=result[i].productquantity%></td>
+                    <td><%=result[i].productdiscount%></td>
+                
                   
                     </tr>
 

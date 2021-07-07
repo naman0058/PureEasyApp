@@ -13,15 +13,21 @@ $.getJSON(`${table}/all`, data => {
 
 })
 
-function makeTable(categories){
-      let table = ` <div class="table-responsive">
 
-      <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
-<table id="report-table" class="table table-bordered table-striped mb-0">
+document.write('<script type="text/javascript" src="/javascripts/common.js" ></script>');
+
+function makeTable(categories){
+    let table = ` <div class="table-responsive">
+
+    <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
+    <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;'>
+              
+<table id="myTable" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
-<th>Trackid</th>
 <th>Name</th>
+<th>Trackid</th>
+
 <th>Number</th>
 <th>Options</th>
 </tr>
@@ -30,9 +36,9 @@ function makeTable(categories){
 
 $.each(categories,(i,item)=>{
 table+=`<tr>
-
+<td><a href='/delivery/details?number=${item.number}'>${item.name}</a></td>
 <td>${item.trackid}</td>
-<td>${item.name}</td>
+
 <td>${item.number}</td>
 <td>
 <a href="#!" class="btn btn-info btn-sm details" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;View Details </a>

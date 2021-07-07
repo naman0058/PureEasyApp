@@ -38,16 +38,22 @@ function fillDropDown(id, data, label, selectedid = 0) {
 
 
 
+document.write('<script type="text/javascript" src="/javascripts/common.js" ></script>');
+
+
 function makeTable(categories){
       let table = ` <div class="table-responsive">
 
       <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
-<table id="report-table" class="table table-bordered table-striped mb-0">
+      <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;'>
+                
+<table id="myTable" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
+<th>Name</th>
 <th>Image</th>
 <th>Category Name</th>
-<th>Name</th>
+
 <th>Daily Essencial</th>
 <th>Options</th>
 </tr>
@@ -56,11 +62,12 @@ function makeTable(categories){
 
 $.each(categories,(i,item)=>{
 table+=`<tr>
+<td>${item.name}</td>
 <td>
 <img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
 </td>
 <td>${item.categoryname}</td>
-<td>${item.name}</td>
+
 <td>${item.essencial}</td>
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>

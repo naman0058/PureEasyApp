@@ -84,8 +84,20 @@
                                     <td class="text-center">
                                         <span class="whish-list-price"> <%=result[1][i].status%> </span>
                                     </td>
-                                  
-                                </tr>
+
+
+<% if(result[1][i].status == 'cancel'){ %>
+
+<% } else { %>
+
+    <td class="text-center">
+        <a href="/myorder/cancel?orderid=<%=result[1][i].id%>"><button type="btn" class="btn btn-danger">Cancel</button> </a>
+     </td>
+   
+ </tr>
+
+<% } %>
+
                                
 
 <% } %>

@@ -21,7 +21,7 @@ router.get('/',(req,res)=>{
 
 router.get('/active',(req,res)=>{
     if(req.session.adminid){
-        res.render('users',{msg:'active'})
+        res.render('users',{msg:'active1'})
     }
     else {
         res.render('admin_login',{msg:'Please Login First'})
@@ -33,7 +33,7 @@ router.get('/active',(req,res)=>{
 
 router.get('/inactive',(req,res)=>{
     if(req.session.adminid){
-        res.render('users',{msg:'inactive'})
+        res.render('users',{msg:'inactive1'})
     }
     else {
         res.render('admin_login',{msg:'Please Login First'})

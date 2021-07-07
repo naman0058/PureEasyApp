@@ -68,14 +68,8 @@ router.get('/', function(req, res, next) {
 
 
 
-
-
-
-
-
-
 router.get('/order-history',(req,res)=>{
-  pool.query(`select * from booking where status = 'completed' order by id desc;`,(err,result)=>{
+  pool.query(`select  b.* , (select p.name from product p where p.id = b.booking_id) as productname from booking b where b.status =  'completed' order by id desc;`,(err,result)=>{
     if(err) throw err;
     else res.render('show-orders',{result:result})
   })
@@ -83,7 +77,7 @@ router.get('/order-history',(req,res)=>{
 
 
 router.get('/running-order',(req,res)=>{
-  pool.query(`select * from booking where status != 'completed' order by id desc;`,(err,result)=>{
+  pool.query(`select  b.* , (select p.name from product p where p.id = b.booking_id) as productname from booking b where b.status != 'completed' order by id desc;`,(err,result)=>{
     if(err) throw err;
     else res.render('show-orders',{result:result})
   })
@@ -91,7 +85,7 @@ router.get('/running-order',(req,res)=>{
 
 
 router.get('/cancel-order',(req,res)=>{
-  pool.query(`select * from cancel_booking order by id desc `,(err,result)=>{
+  pool.query(`select  b.* , (select p.name from product p where p.id = b.booking_id) as productname from booking b where b.status = 'cancel' order by id desc `,(err,result)=>{
     if(err) throw err;
     else res.render('show-orders',{result:result})
   })
@@ -724,6 +718,15 @@ router.get('/myorder',(req,res)=>{
 
 
 
+router.get('/myorder/cancel',(req,res)=>{
+  pool.query(`update booking set status = 'cancel' where id = '${req.query.orderid}'`,(err,result)=>{
+      if(err) throw err;
+      else res.redirect('/myorder')
+  })
+})
+
+
+
 
 
 router.get('/search',(req,res)=>{
@@ -890,12 +893,11 @@ router.get('/banner-product',(req,res)=>{
     from banner_manage t where t.bannerid = '${req.query.id}' ;`
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else  res.render('view_all_product',{result:result,login:false})
+      else if(result[1][0]) res.render('view_all_product',{result:result,login:true})
+      else  res.render('not_found',{result,login:true})
     })
   }
   
-
- 
 })
 
 
