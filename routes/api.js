@@ -836,7 +836,7 @@ router.post('/mywishlist',(req,res)=>{
 
 
 router.get('/search',(req,res)=>{
-   var query = `select * from product where keyword Like '%${req.query.search}%';`
+   var query = `select * from product where keywords Like '%${req.query.search}%';`
     pool.query(query,(err,result)=>{
       if(err) throw err;
       else res.json(result)
