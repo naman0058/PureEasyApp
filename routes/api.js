@@ -820,7 +820,16 @@ pool.query(`select * from wishlist where usernumber = '${req.body.usernumber}' a
 
 
 router.post('/mywishlist',(req,res)=>{
-  pool.query(`select * from wishlist where usernumber = '${req.body.usernumber}'`,(err,result)=>{
+  pool.query(`select t.*,
+  (select p.name from product p where p.id = t.booking_id) as productname,
+  (select p.price from product p where p.id = t.booking_id) as productprice,
+  (select p.quantity from product p where p.id = t.booking_id) as productquantity,
+  (select p.discount from product p where p.id = t.booking_id) as productdiscount,
+  (select p.image from product p where p.id = t.booking_id) as productimage,
+  (select p.categoryid from product p where p.id = t.booking_id) as productcategoryid,
+  (select p.subcategoryid from product p where p.id = t.booking_id) as productsubcategoryid,
+  (select p.net_amount from product p where p.id = t.booking_id) as productnetamount 
+  from wishlist t where usernumber = '${req.body.usernumber}'`,(err,result)=>{
     if(err) throw err;
     else res.json(result)
   })
