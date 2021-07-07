@@ -892,6 +892,7 @@ router.get('/get-single-address',(req,res)=>{
 
 
 router.post('/update-address', (req, res) => {
+  console.log('data',req.body)
   pool.query(`update address set ? where id = ?`, [req.body, req.body.id], (err, result) => {
       if(err) {
           res.json({
