@@ -1406,6 +1406,7 @@ router.post('/order-now',(req,res)=>{
           data[i].pincode = req.body.pincode
           data[i].order_date = today
           data[i].time = req.body.time
+          data[i].razropay_order_id = req.body.txnid
     
     
          }
