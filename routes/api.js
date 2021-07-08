@@ -1443,7 +1443,9 @@ router.post('/order-now',(req,res)=>{
     pool.query(`delete from cart where usernumber = '${req.body.usernumber}'`,(err,result)=>{
       if(err) throw err;
       else {
-         res.redirect('/myorder')
+        res.json({
+          msg : 'success'
+        })
       }
     })
     
