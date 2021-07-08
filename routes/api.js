@@ -1331,6 +1331,134 @@ router.get('/get-faq/delete',(req,res)=>{
 })
 
 
+
+
+
+
+
+
+
+
+
+router.post('/order-now',(req,res)=>{
+  let body = req.body;
+// console.log('body',req.body)
+  let cartData = req.body
+
+  console.log('CardData',cartData)
+
+
+
+    console.log('CardData',cartData)
+
+       body['status'] = 'pending'
+        
+    
+      var today = new Date();
+    var dd = today.getDate();
+    
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+    {
+      dd='0'+dd;
+    } 
+    
+    if(mm<10) 
+    {
+      mm='0'+mm;
+    } 
+    today = yyyy+'-'+mm+'-'+dd;
+    
+    
+    body['date'] = today
+    
+    
+    
+      var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var result = '';
+      for ( var i = 0; i < 12; i++ ) {
+          result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+      }
+     orderid = result;
+    
+    
+      
+     console.log(req.body)
+    
+    
+     pool.query(`select * from cart where usernumber = '${req.session.usernumber}'`,(err,result)=>{
+         if(err) throw err;
+         else {
+    
+         let data = result
+    
+         for(i=0;i<result.length;i++){
+          data[i].name = req.body.name
+          data[i].date = today
+          data[i].orderid = orderid
+          data[i].status = 'pending'
+          data[i].number = req.session.usernumber
+          data[i].usernumber = req.session.usernumber
+          data[i].payment_mode = 'cash'
+          data[i].address = req.body.address
+          data[i].id = null
+          data[i].pincode = req.body.pincode
+          data[i].order_date = today
+          data[i].time = req.body.time
+    
+    
+         }
+    
+    
+       
+    
+    for(i=0;i<data.length;i++) {
+      console.log('quantity1',data[i].quantity)
+    
+    let quantity = data[i].quantity;
+    let booking_id = data[i].booking_id;
+    
+     pool.query(`insert into booking set ?`,data[i],(err,result)=>{
+             if(err) throw err;
+             else {
+        
+    
+    pool.query(`update product set quantity = quantity - ${quantity} where id = '${booking_id}'`,(err,result)=>{
+     if(err) throw err;
+     else {
+    
+     }
+    
+    })
+    
+             }
+        })
+    }
+    
+    
+      
+    
+    
+    pool.query(`delete from cart where usernumber = '${req.session.usernumber}'`,(err,result)=>{
+      if(err) throw err;
+      else {
+         res.redirect('/myorder')
+      }
+    })
+    
+    
+         }
+     })
+
+
+  
+
+ 
+})
+
+
+
 module.exports = router;
 
 
