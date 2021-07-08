@@ -13,13 +13,13 @@
     "currency": "INR",
     "name": "",
     "description": '',
-    "image": "http://pureasy/images/logo.png",
+    "image": "http://pureasy.in/images/logo.png",
     "order_id": data.param,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
-     "callback_url" : "http://pureasy/api/razorpay-response",
+     "callback_url" : "http://pureasy.in/api/razorpay-response",
      "redirect": true,
      "modal": {
         "ondismiss": function(){
-            window.location.href = 'http://pureasy/api/failed_payment'
+            window.location.href = 'http://pureasy.in/api/failed_payment'
         }
     },
     "theme": {
