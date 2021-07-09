@@ -936,7 +936,8 @@ router.get('/get-single-profile',(req,res)=>{
 
 
 router.post('/update-profile', (req, res) => {
-  pool.query(`update users set ? where number = ?`, [req.body, req.body.usernumber], (err, result) => {
+  console.log(req.body)
+  pool.query(`update users set ? where number = ?`, [req.body, req.body.number], (err, result) => {
       if(err) {
           res.json({
               status:500,
