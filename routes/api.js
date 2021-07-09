@@ -926,7 +926,7 @@ router.post('/update-address', (req, res) => {
 
 
 router.get('/get-single-profile',(req,res)=>{
-  pool.query(`select * from users where id = '${req.query.usernumber}'`,(err,result)=>{
+  pool.query(`select * from users where number = '${req.query.usernumber}'`,(err,result)=>{
     if(err) throw err;
     else res.json(result)
   })
