@@ -1658,6 +1658,33 @@ res.json({
 
 
 
+
+
+
+
+
+
+
+
+
+router.post('/login-check',(req,res)=>{
+  pool.query(`select * from users where number = '${req.body.number}'`,(err,result)=>{
+    if(err) throw err;
+    else if(result[0]){
+      res.json({
+        msg : 'success'
+      })
+    }
+    else{
+      res.json({
+        msg : 'fail'
+      })
+    }
+  })
+})
+
+
+
 module.exports = router;
 
 
