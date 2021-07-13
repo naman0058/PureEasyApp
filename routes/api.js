@@ -1214,7 +1214,9 @@ router.get('/view-all-product',(req,res)=>{
     (select p.image from product p where p.id = t.productid) as productimage,
     (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
     (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
-    (select p.net_amount from product p where p.id = t.productid) as productnetamount 
+    (select p.net_amount from product p where p.id = t.productid) as productnetamount ,
+  (select c.quantity from cart c where c.booking_id = t.productid and c.usernumber = '${req.body.number}'  ) as userquantity
+
     from banner_manage t where t.bannerid = '${req.query.id}' `
     pool.query(query,(err,result)=>{
       if(err) throw err;
