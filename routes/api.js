@@ -66,6 +66,8 @@ router.get('/get-products',(req,res)=>{
   (select p.categoryid from product p where p.id = productid) as productcategoryid,
   (select p.subcategoryid from product p where p.id = productid) as productsubcategoryid,
   (select p.net_amount from product p where p.id = productid) as productnetamount
+  (select c.quantity from cart c where c.booking_id = productid and c.usernumber = '${req.query.number}'  ) as userquantity
+
   
     FROM
      (SELECT *,
