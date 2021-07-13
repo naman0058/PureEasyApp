@@ -38,6 +38,53 @@ router.post('/index-category',(req,res)=>{
 
 
 
+router.get('/get-top-banner',(req,res)=>{
+  pool.query(`select * from banner where type = 'Front Banner'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+router.get('/get-bottom-banner',(req,res)=>{
+  pool.query(`select * from banner where type = 'Bottom Banner'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+router.get('/get-products',(req,res)=>{
+  var query2=` SELECT bannerid ,productid , (select t.name from promotional_text t where t.id = bannerid) as textname ,
+  (select p.name from product p where p.id = productid) as productname,
+  (select p.price from product p where p.id = productid) as productprice,
+  (select p.quantity from product p where p.id = productid) as productquantity,
+  (select p.discount from product p where p.id = productid) as productdiscount,
+  (select p.image from product p where p.id = productid) as productimage,
+  (select p.categoryid from product p where p.id = productid) as productcategoryid,
+  (select p.subcategoryid from product p where p.id = productid) as productsubcategoryid,
+  (select p.net_amount from product p where p.id = productid) as productnetamount
+  
+    FROM
+     (SELECT *,
+                   ROW_NUMBER() OVER (PARTITION BY bannerid ORDER BY id DESC) as country_rank
+       FROM promotional_text_management p) ranked
+    WHERE country_rank <= 4 order by bannerid desc;`
+  var query3 = `select * from promotional_text order by id desc;`
+  pool.query(query2+query3,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+
+
+
 
 
 router.post('/services1',(req,res)=>{
@@ -1457,6 +1504,149 @@ router.post('/order-now',(req,res)=>{
     
          }
      })
+
+
+  
+
+ 
+})
+
+
+
+
+
+
+
+
+router.post('/pay_by_wallet',(req,res)=>{
+  let body = req.body;
+// console.log('body',req.body)
+  let cartData = req.body
+
+  console.log('CardData',cartData)
+
+
+
+    console.log('CardData',cartData)
+
+       body['status'] = 'pending'
+        
+    
+      var today = new Date();
+    var dd = today.getDate();
+    
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+    {
+      dd='0'+dd;
+    } 
+    
+    if(mm<10) 
+    {
+      mm='0'+mm;
+    } 
+    today = yyyy+'-'+mm+'-'+dd;
+    
+    
+    body['date'] = today
+    
+    
+    
+      var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var result = '';
+      for ( var i = 0; i < 12; i++ ) {
+          result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+      }
+     orderid = result;
+    
+    
+      
+     console.log(req.body)
+    
+
+
+     pool.query(`select * from users where number = '${req.body.usernumber}'`,(err,result)=>{
+       if(err) throw err;
+       else if((+result[0].deposit_cash) >= (+req.body.price)) {
+        pool.query(`select * from cart where usernumber = '${req.body.usernumber}'`,(err,result)=>{
+          if(err) throw err;
+          else {
+     
+          let data = result
+     
+          for(i=0;i<result.length;i++){
+           data[i].name = req.body.name
+           data[i].date = today
+           data[i].orderid = orderid
+           data[i].status = 'pending'
+           data[i].number = req.body.usernumber
+           data[i].usernumber = req.body.usernumber
+           data[i].payment_mode = 'cash'
+           data[i].address = req.body.address
+           data[i].id = null
+           data[i].pincode = req.body.pincode
+           data[i].order_date = today
+           data[i].time = req.body.time
+           data[i].razropay_order_id = req.body.txnid
+     
+     
+          }
+     
+     
+        
+     
+     for(i=0;i<data.length;i++) {
+       console.log('quantity1',data[i].quantity)
+     
+     let quantity = data[i].quantity;
+     let booking_id = data[i].booking_id;
+     
+      pool.query(`insert into booking set ?`,data[i],(err,result)=>{
+              if(err) throw err;
+              else {
+         
+     
+     pool.query(`update product set quantity = quantity - ${quantity} where id = '${booking_id}'`,(err,result)=>{
+      if(err) throw err;
+      else {
+     
+      }
+     
+     })
+     
+              }
+         })
+     }
+     
+     
+       
+     
+     
+     pool.query(`delete from cart where usernumber = '${req.body.usernumber}'`,(err,result)=>{
+       if(err) throw err;
+       else {
+         res.json({
+           msg : 'success'
+         })
+       }
+     })
+     
+     
+          }
+      }) 
+       }
+       else {
+
+res.json({
+  msg : 'Low Balance'
+})
+
+       }
+     })
+
+    
+ 
 
 
   
