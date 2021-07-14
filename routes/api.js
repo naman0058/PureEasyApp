@@ -1204,7 +1204,11 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
   router.post('/single-order-details',(req,res)=>{
-    pool.query(`select * from booking where orderid = '${req.body.orderid}'`,(err,result)=>{
+    pool.query(`select b.* , 
+    (select p.name from product p where p.id = b.booking_id) as productname,
+    (select p.image from product p where p.id = b.booking_id) as productimage,
+    (select s.sizename from size s where s.id = (select p.sizeid from product p where p.id = b.booking_id ) ) as productsize
+    from booking where orderid = '${req.body.orderid}'`,(err,result)=>{
       if(err) throw err;
       else res.json(result)
     })

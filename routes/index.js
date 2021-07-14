@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
      (SELECT *,
                    ROW_NUMBER() OVER (PARTITION BY bannerid ORDER BY id DESC) as country_rank
        FROM promotional_text_management p) ranked
-    WHERE country_rank <= 4 order by bannerid desc;`
+    WHERE country_rank <= 5 order by bannerid desc;`
   var query3 = `select * from promotional_text order by id desc;`
   var query4 = `select * from cart where usernumber = '${req.session.number}';`
   var query5 = `select * from banner where type = 'Bottom Banner' order by id desc;`
@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
  }
  else{
   var query = `select * from category order by id desc;`
-  var query1 = `select * from banner order by id desc;`
+  var query1 = `select * from banner where type = 'Front Banner' order by id desc;`
   var query2=` SELECT bannerid ,productid , (select t.name from promotional_text t where t.id = bannerid) as textname ,
   (select p.name from product p where p.id = productid) as productname,
   (select p.price from product p where p.id = productid) as productprice,
@@ -52,7 +52,7 @@ router.get('/', function(req, res, next) {
      (SELECT *,
                    ROW_NUMBER() OVER (PARTITION BY bannerid ORDER BY id DESC) as country_rank
        FROM promotional_text_management p) ranked
-    WHERE country_rank <= 4 order by bannerid desc;`
+    WHERE country_rank <= 5 order by bannerid desc;`
   var query3 = `select * from promotional_text order by id desc;`
   var query4 = `select * from cart where usernumber = '${req.session.number}';`
   var query5 = `select * from banner where type = 'Bottom Banner' order by id desc;`
@@ -259,7 +259,7 @@ pool.query(`select categoryid from product where id = '${req.query.id}'`,(err,re
 
 router.post("/cart-handler", (req, res) => {
   let body = req.body
-console.log('usern ka number',req.session.usernumber)
+console.log('usern ka number',req.session.ipaddress)
 
 if(req.session.usernumber || req.session.usernumber!= undefined){
   body['usernumber'] = req.session.usernumber;
@@ -442,7 +442,16 @@ router.get('/mycart',(req,res)=>{
     pool.query(query+query1+query2,(err,result)=>{
       if(err) throw err;
       else{
-       res.render('cart', { title: 'Express',login:'true',result });
+
+if(result[2][0].totalprice > 500) {
+  res.render('cart', { title: 'Express',login:'true',result , shipping_charges : 0 });
+
+}
+else {
+  res.render('cart', { title: 'Express',login:'true',result , shipping_charges : 500 });
+
+}
+
    
       }
    
@@ -464,7 +473,17 @@ router.get('/mycart',(req,res)=>{
     pool.query(query+query1+query2,(err,result)=>{
       if(err) throw err;
       else{
-       res.render('cart', { title: 'Express',login:'false',result });
+     
+
+        if(result[2][0].totalprice > 500) {
+          res.render('cart', { title: 'Express',login:'false',result , shipping_charges : 0 });
+        
+        }
+        else {
+          res.render('cart', { title: 'Express',login:'false',result , shipping_charges : 500 });
+        
+        }
+        
    
       }
    

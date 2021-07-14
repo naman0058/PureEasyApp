@@ -1,203 +1,155 @@
-<%- include ('./indexheader.ejs') %>    
 
-    <!-- header section end -->
 
-    <!-- main content start -->
-
-    <!-- bread crumb section start -->
-    <nav class="breadcrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                   
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- bread crumb section end -->
+<%- include ('./indexheader.ejs') %>
 
 
 
-    <section class="whish-list-section section-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h3 class="title mb-5 pb-3 text-capitalize">Your cart items</h3>
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			<!-- ============================================================== -->
+			<!-- Top header  -->
+			<!-- ============================================================== -->
+			
+		
+			
+			<!-- =========================== Add To Cart =================================== -->
+			<section>
+				<div class="container">
+					<div class="row">
+						
+						<div class="col-lg-8 col-md-12 col-sm-12 col-12">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Product</th>
+											<th scope="col">Price</th>
+											<th scope="col">Quantity</th>
+											<th scope="col">Total</th>
+										</tr>
+									</thead>
+									<tbody>
 
 
-                    <% if(!result[0]) { %>
-						<div class="col-lg-4"></div>
-						<div class="col-lg-4">
-							<img src='/images/emptycart.png' style="text-align: center;justify-content: center;">
+                                        <% for(i=0;i<result[1].length;i++) { %>
 
+
+										<tr>
+											<td>
+												<div class="tbl_cart_product">
+													<div class="tbl_cart_product_thumb">
+														<img src="/images/<%=result[1][i].bookingimage%>" class="img-fluid" alt="" />
+													</div>
+													<div class="tbl_cart_product_caption">
+														<h5 class="tbl_pr_title"><%=result[1][i].bookingname%></h5>
+														
+													</div>
+												</div>
+											</td>
+											<td><h4 class="tbl_org_price">Rs. <%=result[1][i].oneprice%></h4></td>
+											<td>
+                                            <span>
+                                                <button class="count-btn decrement minus btn-danger btn-sm" categoryid="<%=result[1][i].categoryid%>" availablequantity="<%=result[1][i].availablequantity%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>">
+                                                   
+                                                    -</button>
+                                               <input type="text" readonly min="1" max="100" step="1" value="<%=result[1][i].quantity%>" style="width: 40px;text-align: center;align-items: center;border: none;">
+                                               <button class="add btn btn-success btn-sm" categoryid="<%=result[1][i].categoryid%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" availablequantity="<%=result[1][i].availablequantity%>"  value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>">
+                                                   
+                                                + </button>
+                                            </span>
+                                            </td>
+											<td>
+												<div class="tbl_pr_action">
+													<h5 class="tbl_total_price">Rs. <%=result[1][i].price%></h5>
+													<a href="/delete?id=<%=result[1][i].id%>" class="tbl_remove"><i class="ti-close"></i></a>
+												</div>
+											</td>
+										</tr>
+
+
+                                        <% } %>
+										
+									</tbody>
+								</table>
+							</div>
+							
+							<!-- Coupon Box -->
+							<div class="row align-items-end justify-content-between mb-10 mb-md-0">
+								<div class="col-12 col-md-7">
+
+									<!-- Coupon -->
+								
+
+								</div>
+								
+							
+							</div>
+							<!-- Coupon Box -->
+							
 						</div>
-						<div class="col-lg-4"></div>
+						
+						<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+							<div class="cart_detail_box mb-4">
+								<div class="card-body">
+									<ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+										<li class="list-group-item d-flex">
+											<h5 class="mb-0">Order Summary</h5>
+										</li>
+										<li class="list-group-item d-flex">
+											<span>Subtotal</span> <span class="ml-auto font-size-sm">Rs. <%=result[2][0].totalprice%></span>
+										</li>
+										<li class="list-group-item d-flex">
+											<span>Shipping Charges  	</span> <span class="ml-auto font-size-sm">Rs. <%=shipping_charges%></span>
+										</li>
+										<li class="list-group-item d-flex font-size-lg font-weight-bold">
+											<span>Total</span> <span class="ml-auto font-size-sm">Rs. <%=result[2][0].totalprice + shipping_charges%></span>
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+							<a class="btn btn-block btn-dark mb-2" href="/checkout">Proceed to Checkout</a>
+							<a class="px-0 text-body" href="/"><i class="ti-back-left mr-2"></i> Continue Shopping</a>
+						</div>
+						
+						
+					</div>
+				</div>
+			</section>
+			<!-- =========================== Add To Cart =================================== -->
+			
+			<!-- ============================ Call To Action ================================== --> 
+			<section class="theme-bg call_action_wrap-wrap">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							
+							<div class="call_action_wrap">
+								<div class="call_action_wrap-head">
+									<h3>Do You Have Questions ?</h3>
+									<span>We'll help you to grow your career and growth.</span>
+								</div>
+								<div class="newsletter_box">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Subscribe here...">
+										<div class="input-group-append">
+										<button class="btn search_btn" type="button"><i class="fas fa-arrow-alt-circle-right"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- ============================ Call To Action End ================================== -->
+			
+			<!-- ============================ Footer Start ================================== -->
+            <%- include ('./indexfooter.ejs') %>
+	
+
             
-						<% } else { %>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class="thead-light">
-
-
-
-
-                                <tr>
-                                    <th class="text-center" scope="col">Product Image</th>
-                                    <th class="text-center" scope="col">Product Name</th>
-                                    <th class="text-center" scope="col">Product Price</th>
-                                    <th class="text-center" scope="col">Qty</th>
-                                    <th class="text-center" scope="col">Price</th>
-                                    <th class="text-center" scope="col">action</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-
-
-
-                                <% for(i=0;i<result[1].length;i++) { %>
-
-
-                                <tr>
-                                    <th class="text-center" scope="row">
-                                        <img src="/images/<%=result[1][i].bookingimage%>" alt="img" style="height: 100px;">
-                                    </th>
-                                    <td class="text-center">
-                                        <span class="whish-title"><%=result[1][i].bookingname%></span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-success">Rs. <%=result[1][i].oneprice%></span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="product-count style">
-                                            <div class="count d-flex justify-content-center">
-                                                <input type="number" min="1" max="100" step="1" value="<%=result[1][i].quantity%>">
-                                                <div class="button-group">
-                                                    <button class="count-btn increment">
-                                                        <span class="las la-angle-up add" categoryid="<%=result[1][i].categoryid%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" availablequantity="<%=result[1][i].availablequantity%>"  value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span>
-                                                    </button>
-                                                    <button class="count-btn decrement">
-                                                        <span class="las la-angle-down minus" categoryid="<%=result[1][i].categoryid%>" availablequantity="<%=result[1][i].availablequantity%>" booking_id = "<%=result[1][i].booking_id%>" number="<%=result[1][i].number%>" value="<%=result[1][i].quantity%>" price="<%=result[1][i].oneprice%>"></span></span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-
-
-                                    <td class="text-center">
-                                        <span class="whish-list-price"> Rs. <%=result[1][i].price%> </span>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <a href="/delete?id=<%=result[1][i].id%>">
-                                            <span class="trash"><i class="ion-android-delete"></i> </span></a>
-                                    </td>
-                                  
-                                </tr>
-                               
-
-<% } %>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <% } %>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="check-out-section section-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-
-                </div>
-                <div class="col-lg-5 mt-4 mt-lg-0">
-                    <div class="your-order-area">
-                        <div class="your-order-wrap gray-bg-4">
-                            <div class="your-order-product-info">
-                               
-
-                               
-                                <div class="your-order-total mb-0">
-                                    <ul>
-                                        <li class="order-total">Total</li>
-                                        <li>Rs. <%=result[2][0].totalprice%></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Place-order mt-5">
-                            <!-- <a class="btn btn-dark me-3" href="#">update cart</a> -->
-                            <a class="btn btn-dark my-2 my-sm-0" href="/checkout">checkout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- news letter section start -->
- 
-    <!-- news letter section end -->
-
-
-    <!-- service section start -->
-    <section class="service-section section-mt section-mb">
-        <div class="container">
-            <div class="services">
-                <div class="row mb-n7">
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service1.png" alt="images_not_found">
-                            <h3 class="service-title">100% SECURE PAYMENTS</h3>
-                            <p>Moving your card details to a much more secured place</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service2.png" alt="images_not_found">
-                            <h3 class="service-title">TRUSTPAY</h3>
-                            <p>100% Payment Protection. Easy Return Policy</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service3.png" alt="images_not_found">
-                            <h3 class="service-title">HELP CENTER</h3>
-                            <p>GGot a question? Look no further.Browse our FAQs or submit your query here.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service4.png" alt="images_not_found">
-                            <h3 class="service-title">Express Shipping</h3>
-                            <p>Fast, reliable delivery from global warehouses</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- service section end -->
-
-
-    <!-- main content end -->
-
-    <!-- footer section start -->
-    <%- include ('./indexfooter.ejs') %>    
-
-
 
     <script>
         $('.add').click(function(){
