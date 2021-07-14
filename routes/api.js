@@ -1288,6 +1288,30 @@ router.get('/view-all-product',(req,res)=>{
 
 
 
+
+router.get('/view-all-text-product',(req,res)=>{
+  console.log('que',req.query)
+  var query = `select t.* ,   
+    (select p.name from product p where p.id = t.productid) as productname,
+    (select p.price from product p where p.id = t.productid) as productprice,
+    (select p.quantity from product p where p.id = t.productid) as productquantity,
+    (select p.discount from product p where p.id = t.productid) as productdiscount,
+    (select p.image from product p where p.id = t.productid) as productimage,
+    (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
+    (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
+    (select p.net_amount from product p where p.id = t.productid) as productnetamount ,
+  (select c.quantity from cart c where c.booking_id = t.productid and c.usernumber = '${req.query.number}'  ) as userquantity
+
+    from promotional_text_management t where t.bannerid = '${req.query.id}' `
+    pool.query(query,(err,result)=>{
+      if(err) throw err;
+     else res.json(result)
+    })
+})
+
+
+
+
 router.get('/show-all-promotional-text',(req,res)=>{
   pool.query(`select * from promotional_text order by id desc`,(err,result)=>{
     if(err) throw err;
