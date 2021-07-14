@@ -65,7 +65,7 @@ router.get('/get-products',(req,res)=>{
   (select p.image from product p where p.id = productid) as productimage,
   (select p.categoryid from product p where p.id = productid) as productcategoryid,
   (select p.subcategoryid from product p where p.id = productid) as productsubcategoryid,
-  (select p.net_amount from product p where p.id = productid) as productnetamount
+  (select p.net_amount from product p where p.id = productid) as productnetamount,
   (select c.quantity from cart c where c.booking_id = productid and c.usernumber = '${req.query.number}'  ) as userquantity
 
   
@@ -877,7 +877,8 @@ router.post('/mywishlist',(req,res)=>{
   (select p.image from product p where p.id = t.booking_id) as productimage,
   (select p.categoryid from product p where p.id = t.booking_id) as productcategoryid,
   (select p.subcategoryid from product p where p.id = t.booking_id) as productsubcategoryid,
-  (select p.net_amount from product p where p.id = t.booking_id) as productnetamount 
+  (select p.net_amount from product p where p.id = t.booking_id) as productnetamount ,
+  (select c.quantity from cart c where c.booking_id = t.booking_id and c.usernumber = '${req.body.number}'  ) as userquantity
   from wishlist t where usernumber = '${req.body.usernumber}'`,(err,result)=>{
     if(err) throw err;
     else res.json(result)
@@ -894,7 +895,9 @@ router.post('/mywishlist',(req,res)=>{
 
 
 router.get('/search',(req,res)=>{
-   var query = `select * from product where keywords Like '%${req.query.search}%';`
+   var query = `select p.*,
+   (select c.quantity from cart c where c.booking_id = p.id and c.usernumber = '${req.query.number}'  ) as userquantity
+   from product p where p.keywords Like '%${req.query.search}%';`
     pool.query(query,(err,result)=>{
       if(err) throw err;
       else res.json(result)
@@ -1193,6 +1196,15 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
   router.post('/single-booking-details',(req,res)=>{
     pool.query(`select * from booking where id = '${req.body.booking_id}'`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+    })
+  })
+
+
+
+  router.post('/single-order-details',(req,res)=>{
+    pool.query(`select * from booking where orderid = '${req.body.orderid}'`,(err,result)=>{
       if(err) throw err;
       else res.json(result)
     })
