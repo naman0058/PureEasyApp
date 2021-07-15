@@ -878,7 +878,7 @@ router.post('/mywishlist',(req,res)=>{
   (select p.categoryid from product p where p.id = t.booking_id) as productcategoryid,
   (select p.subcategoryid from product p where p.id = t.booking_id) as productsubcategoryid,
   (select p.net_amount from product p where p.id = t.booking_id) as productnetamount ,
-  (select c.quantity from cart c where c.booking_id = t.booking_id and c.usernumber = '${req.body.number}'  ) as userquantity
+  (select c.quantity from cart c where c.booking_id = t.booking_id and c.usernumber = '${req.body.usernumber}'  ) as userquantity
   from wishlist t where usernumber = '${req.body.usernumber}'`,(err,result)=>{
     if(err) throw err;
     else res.json(result)
