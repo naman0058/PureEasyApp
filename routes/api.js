@@ -1208,7 +1208,7 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
     (select p.name from product p where p.id = b.booking_id) as productname,
     (select p.image from product p where p.id = b.booking_id) as productimage,
     (select s.name from size s where s.id = (select p.sizeid from product p where p.id = b.booking_id ) ) as productsize
-    from booking b where b.orderid = '${req.body.orderid}'`
+    from booking b where b.orderid = '${req.body.orderid}';`
     var query1 = `select sum(price) as totalprice from booking where orderid = '${req.body.orderid}';`
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
