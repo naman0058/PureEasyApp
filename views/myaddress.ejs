@@ -279,7 +279,7 @@
 										<div class="form-group">
 											<label class="bold-simple">Pincode</label>
 											<div class="input-group input-group-merge">
-											<select class="form-control" id="pincode" name="pincode" required></select>
+											<select class="form-control" id="pincode1" name="pincode" required></select>
 											</div>
 										</div>
 									</div>
@@ -354,7 +354,14 @@
 			<script>
 				$.getJSON(`/api/pincode`, data => {
     pincode = data
-    fillDropDown1('pincode', data, 'Choose Time Slot', 0)
+    fillDropDown1('pincode', data, 'Choose Pincode', 0)
+  
+})
+
+
+$.getJSON(`/api/pincode`, data => {
+    pincode = data
+    fillDropDown1('pincode1', data, 'Choose Pincode', 0)
   
 })
 
