@@ -17,7 +17,7 @@ today = mm + '/' + dd + '/' + yyyy;
 
 
 router.post('/index-category',(req,res)=>{
-    var query = `select * from category order by id desc limit 6;`
+    var query = `select * from category order by id desc;`
     var query1 = `select sum(quantity) as counter from cart where usernumber ='${req.body.number}' and status is null;`
       var query2 = `select sum(c.price) as amount from cart c where 1 <= (select p.quantity from product p where p.id = c.booking_id ) and  c.usernumber = '${req.body.number}' and c.status is null;`
       var query3 = `select * from banner where type = 'Front Banner';`
