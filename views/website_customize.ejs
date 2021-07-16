@@ -7,9 +7,9 @@
             <div class="page-error">
               <div class="page-inner " >
                 
-                <div class="page-description" style="margin-bottom: 10px;">
-                 <%=result[1][0].content%>
-                </div>
+             <input type="hidden" class="msg" value="<%=msg%>">
+
+              <div id="result"></div>
                
               </div>
             </div>
@@ -24,3 +24,31 @@
 
 
 <%- include ('./indexfooter.ejs') %>
+
+<script>
+
+$( document ).ready(function() {
+   let msg = $('.msg').val()
+   $.getJSON(`/g?msg=${msg}`,data=>{
+    console.log(data[0].content)
+     a(data)
+  })
+});
+
+ 
+
+
+  function a(data){
+    let table = `<p>
+      
+
+<p>${data[0].content}</p>
+
+      </p>
+      `
+      $('#result').html(table)
+  }
+
+
+
+</script>

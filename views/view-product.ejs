@@ -113,7 +113,8 @@
 								</ul>
 								<div class="tab-content" id="myTabContent">
 									<div class="tab-pane fade active show" id="description" role="tabpanel" aria-labelledby="description-tab" aria-expanded="true">
-										<p><%=result[1][0].description%></p>
+										<p id="resultdescription"></p>
+										<input type="hidden" class="msg" value="<%=result[1][0].description%>">
 									</div>
 								
 								
@@ -252,4 +253,30 @@
                 
                 </script>
                 
+
+				
+<script>
+
+	$( document ).ready(function() {
+	   let msg = $('.msg').val()
+	   let table = `<p>
+		  
+	
+		  <p>${msg}</p>
+		  
+				</p>
+				`
+				$('#resultdescription').html(table)
+		
+	  
+	});
+	
+	 
+	
+	
+	
+	
+	
+	
+	</script>
                 

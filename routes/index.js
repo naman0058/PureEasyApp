@@ -1023,7 +1023,7 @@ router.get('/about',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true})
+      else res.render('website_customize',{result,login:true,msg:'about'})
     })
   }
   else{
@@ -1032,7 +1032,7 @@ router.get('/about',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false})
+      else res.render('website_customize',{result,login:false,msg:'about'})
     })
   }
 })
@@ -1041,7 +1041,13 @@ router.get('/about',(req,res)=>{
 
 
 
-
+router.get('/g',(req,res)=>{
+  var query1 = `select * from website_customize where name = '${req.query.msg}';`
+  pool.query(query1,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
 
 
 router.get('/privacy-policy',(req,res)=>{
@@ -1051,7 +1057,7 @@ router.get('/privacy-policy',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true})
+      else res.render('website_customize',{result,login:true,msg:'pp'})
     })
   }
   else{
@@ -1060,7 +1066,7 @@ router.get('/privacy-policy',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false})
+      else res.render('website_customize',{result,login:false,msg:'pp'})
     })
   }
 })
@@ -1075,7 +1081,7 @@ router.get('/terms-and-conditions',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true})
+      else res.render('website_customize',{result,login:true,msg:'tc'})
     })
   }
   else{
@@ -1084,7 +1090,7 @@ router.get('/terms-and-conditions',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false})
+      else res.render('website_customize',{result,login:false,msg:'tc'})
     })
   }
 })
@@ -1103,7 +1109,7 @@ router.get('/refund-policy',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true})
+      else res.render('website_customize',{result,login:true,msg:'rp'})
     })
   }
   else{
@@ -1112,7 +1118,7 @@ router.get('/refund-policy',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false})
+      else res.render('website_customize',{result,login:false,msg:'rp'})
     })
   }
 })
