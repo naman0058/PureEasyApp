@@ -607,11 +607,17 @@ router.post('/order-now',(req,res)=>{
     req.session.payment_mode = req.body.payment_mode;
    
    
+    if((+req.session.totalprice) > 500) {
+      amount = req.session.totalprice
+    }
+    else {
+     amount = (+req.session.totalprice) + 500
+    }
 
 
     const url = `https://rzp_live_wdTkjI7Ba4b5qN:rxR0Prlwb9Gz7HctbrpukFOe@api.razorpay.com/v1/orders/`;
     const data = {
-      amount: 1 * 100, // amount in the smallest currency unit
+      amount: amount* 100, // amount in the smallest currency unit
       //amount:100,
       currency: "INR",
       payment_capture: true,
@@ -1200,12 +1206,22 @@ router.post('/razorpay-response',(req,res)=>{
           data[i].status = 'pending'
           data[i].number = req.session.usernumber
           data[i].usernumber = req.session.usernumber
-          data[i].payment_mode = 'cash'
+          data[i].payment_mode = 'online'
           data[i].address = req.body.address
           data[i].id = null
           data[i].pincode = req.body.pincode
           data[i].order_date = today
-          data[i].razorpay_order_id = req.body.razorpay_order_id
+          data[i].razorpay_order_id = req.body.razorpay_order_id;
+          data[i].time = req.body.time
+          
+          if((+data[i].price) > 500){
+            data[i].price = data[i].price
+            data[i].shipping_charges = 0
+          }
+          else{
+          data[i].price = (+data[i].price) + 500;
+          data[i].shipping_charges = 500
+          }
     
     
          }
