@@ -1284,13 +1284,19 @@ router.post('/razorpay-response',(req,res)=>{
 
 
 router.get('/address',(req,res)=>{
-  var query = `select * from category order by id desc;`
-  var query1 = `select * from address where usernumber = '${req.session.usernumber}';`
-  var query2 = `select email from users where number = '${req.session.usernumber}';`
-  pool.query(query+query1+query2,(err,result)=>{
-    if(err) throw err;
-    else res.render('myaddress',{result})
-  })
+  if(req.session.usernumber){
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from address where usernumber = '${req.session.usernumber}';`
+    var query2 = `select email from users where number = '${req.session.usernumber}';`
+    pool.query(query+query1+query2,(err,result)=>{
+      if(err) throw err;
+      else res.render('myaddress',{result})
+    })
+  }
+  else{
+res.redirect('/login')
+  }
+  
   
 })
 
