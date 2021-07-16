@@ -27,7 +27,7 @@
 							<div class="woo_pr_detail">
 								
 							
-								<h2 class="woo_pr_title"><%=result[1][0].name%></h2>
+								<h2 class="woo_pr_title" style="font-size: 22px;"><%=result[1][0].name%></h2>
 								
 								<div class="woo_pr_reviews">
 								
@@ -40,10 +40,10 @@
 
 
                                         <% if(result[1][0].discount == 0) { %>
-										<h3>Rs. <%=result[1][0].net_amount%><sup></sup></h3>
+										<h3 style="font-size: 20px;">Rs. <%=result[1][0].net_amount%><sup></sup></h3>
 
                                         <% } else { %>
-                                            <h3>Rs. <%=result[1][0].net_amount%><sup></sup><span class="org_price">Rs. <%=result[1][0].price%></span></h3>
+                                            <h3 style="font-size: 20px;">Rs. <%=result[1][0].net_amount%><sup></sup><span class="org_price">Rs. <%=result[1][0].price%></span></h3>
 
                                             <% } %>
                                     

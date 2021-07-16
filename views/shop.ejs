@@ -30,7 +30,7 @@
 						<div class="col-lg-4 col-md-12">
 							<div class="search-sidebar sm-sidebar" id="filter_search"  style="left:0;">
 								<div class="search-sidebar_header">
-									<h4 class="ssh_heading">Close Filter</h4>
+									<!-- <h4 class="ssh_heading">Close Filter</h4> -->
 									<button onclick="closeFilterSearch()" class="w3-bar-item w3-button w3-large"><i class="ti-close"></i></button>
 								</div>
 								<div class="search-sidebar-body">
@@ -162,7 +162,30 @@
 			<!-- =========================== Search Products =================================== -->
 
 			<!-- ============================ Call To Action ================================== --> 
-		
+			<section class="theme-bg call_action_wrap-wrap">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							
+							<div class="call_action_wrap">
+								<div class="call_action_wrap-head">
+									<h3>Do You Have Questions ?</h3>
+									<span>We'll help you to grow your career and growth.</span>
+								</div>
+								<div class="newsletter_box">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Subscribe here...">
+										<div class="input-group-append">
+										<button class="btn search_btn" type="button"><i class="fas fa-arrow-alt-circle-right"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</section>
 			<!-- ============================ Call To Action End ================================== -->
 			
       <%- include ('./indexfooter.ejs') %>
@@ -202,4 +225,29 @@
       
   
   </script>
-    
+    	<script>
+			function openRightMenu() {
+				document.getElementById("rightMenu").style.display = "block";
+			}
+			function closeRightMenu() {
+				document.getElementById("rightMenu").style.display = "none";
+			}
+		</script>
+		
+		<script>
+			function openLeftMenu() {
+				document.getElementById("leftMenu").style.display = "block";
+			}
+			function closeLeftMenu() {
+				document.getElementById("leftMenu").style.display = "none";
+			}
+		</script>
+		
+		<script>
+			function openFilterSearch() {
+				document.getElementById("filter_search").style.display = "block";
+			}
+			function closeFilterSearch() {
+				document.getElementById("filter_search").style.display = "none";
+			}
+		</script>
