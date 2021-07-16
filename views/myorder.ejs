@@ -76,11 +76,20 @@
                                                             
 														</div>
 													</th>
-                                                    <td><%=result[1][i].bookingname%></td>
+                                                    <td class="text-capitalize"><%=result[1][i].bookingname%></td>
 													<td><%=result[1][i].time%></td>
 													
 													<td>Rs. <%=result[1][i].price%></td>
-                                                    <td><%=result[1][i].status%></td>
+
+													<% if(result[1][i].status=='cancel') { %>
+														<td>Cancelled</td>
+
+
+														<% } else { %> 
+															<td class="text-capitalize"><%=result[1][i].status%></td>
+
+
+															<% } %>
 
 													<!-- <td><a href="/invoice?orderid=<%=result[1][i].orderid%>">
 														<button class="btn btn-link">View Invoice</button>
@@ -94,7 +103,7 @@
 
                                                         <% } else { %>
                                                         
-                                                            <td><a href="/myorder/cancel?orderid=<%=result[1][i].id%>" class="btn btn-sm btn-theme">Cancelled</a></td>
+                                                            <td><a href="/myorder/cancel?orderid=<%=result[1][i].id%>" class="btn btn-sm btn-theme">Cancel</a></td>
                                                            
                                                          </tr>
                                                         
