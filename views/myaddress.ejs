@@ -1,0 +1,403 @@
+<%- include ('./indexheader.ejs') %>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			<!-- ============================================================== -->
+			<!-- Top header  -->
+			<!-- ============================================================== -->
+			
+			
+			<!-- =========================== Payment Methode =================================== -->
+			<section class="gray bt-mid">
+				<div class="container">
+					<div class="row">
+					
+						<div class="col-lg-3 col-md-3">
+							<nav class="dashboard-nav mb-10 mb-md-0">
+							  <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+								<a class="list-group-item list-group-item-action dropright-toggle " href="/myorder">
+								  My Order
+								</a>
+								
+							
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/myaccount">
+								  Account Settings
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle active" href="/address">
+								  Address
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/logout">
+								  Logout
+								</a>
+							  </div>
+							</nav>
+						</div>
+
+
+						<div class="col-lg-9 col-md-9">
+							<div class="row">
+
+                                <% for(i=0;i<result[1].length;i++) { %>
+								
+								<!-- Single card -->
+								<div class="col-lg-6 col-md-6">
+									<div class="add-payment-card">
+										
+										<div class="ap-card-header mb-2">
+											<div class="card-header-thumb">
+												<%=result[1][i].name%>
+											</div>
+											<div class="ml-auto">
+												
+												<div class="card-captio">
+													<%=result[1][i].number%>	
+												</div>
+											</div>
+										</div>
+										
+										<div class="ap-card-body">
+											<div class="ml-auto mb-3">
+												<label>Address</label>
+												<div class="card-caption">
+													<%=result[1][i].area%> , <%=result[1][i].landmark%> , <%=result[1][i].state%> , <%=result[1][i].city%> , <%=result[1][i].pincode%>
+												</div>
+											</div>
+											
+											<div class="ap-card-footer">
+												<div class="row">
+													<div class="col-12">
+														<div class="ml-auto">
+															<label>Email</label>
+															<div class="card-caption">
+																<%=result[1][i].email%>
+															</div>
+														</div>
+													</div>
+													<div class="col-3">
+														<div class="ml-auto">
+															<label></label>
+														
+																<a href="javascript:void(0);" 
+																username='<%=result[1][i].name%>' 
+																state = '<%=result[1][i].state%>'
+																city = '<%=result[1][i].city%>'
+																pincode = '<%=result[1][i].pincode%>'
+																landmark = '<%=result[1][i].landmark%>'
+																area = '<%=result[1][i].area%>'
+																email = '<%=result[1][i].email%>'
+																number = '<%=result[1][i].number%>'
+																updateid = '<%=result[1][i].id%>'
+																data-toggle="modal" data-target="#exampleModalCenter" class="btn edit">
+                                                                <button class="btn btn-primary btn-sm">Edit</button>
+																</a>
+                                                               
+															
+														</div>
+													</div>
+
+													<div class="col-2">
+														<div class="ml-auto">
+															<label></label>
+													
+                                                                <a href="/delete-address?id=<%=result[1][i].id%>"<button class="btn btn-danger btn-sm" style="margin-top: 16px;">Delete</button></a>
+                                                               
+
+															
+														</div>
+													</div>
+												</div>
+											</div>
+											
+										</div>
+										
+									</div>
+								</div>
+								
+							<% } %>
+								
+								<!-- Single card -->
+								<div class="col-lg-6 col-md-6">
+									<div class="add-payment-card center">
+										
+										<div class="add-pay-card">
+											<a href="javascript:void(0);" data-toggle="modal" data-target="#add-payment" class="btn btn-pay"><i class='fas fa-map-pin'></i></a>
+										</div>
+										<span>Add New Address</span>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			<!-- =========================== Payment Methode =================================== -->
+
+			
+			<!-- ============================ Call To Action ================================== --> 
+		
+			<!-- ============================ Call To Action End ================================== -->
+			
+			<!-- ============================ Footer Start ================================== -->
+		
+			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document1">
+					<div class="modal-content" id="add-payments1">
+						<span class="mod-close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Add New Address</h4>
+							<div class="login-form">
+								
+			<form action = '/update-address' method='post'>
+								<div class="form-row py-2">
+			
+			
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-md-0">
+											<label class="bold-simple">Full Name</label>
+										<input type="text" name="name" class="form-control" id="name"  placeholder="Full Name" required>
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-md-0">
+											<label class="bold-simple">Email</label>
+										<input type="email" name="email" class="form-control" id="email" placeholder="Email" value="<%=result[2][0].email%>" required>
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-12">
+										<div class="form-group">
+											<label class="bold-simple">Mobile Number</label>
+											<div class="input-group input-group-merge">
+											<input class="form-control form-control-sm" name="number" id="number" type="text" placeholder="Mobile Number" required="">
+												
+											</div>
+										</div>
+									</div>
+			
+			
+									<div class="col-12 col-md-12">
+										<div class="form-group">
+											<label class="bold-simple">Pincode</label>
+											<div class="input-group input-group-merge">
+											<select class="form-control" id="pincode" name="pincode" required></select>
+											</div>
+										</div>
+									</div>
+			
+			
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">State</label>
+											<input class="form-control form-control-sm"  name="state" id="state" type="text" placeholder="State" required="">
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">City</label>
+											<input class="form-control form-control-sm"  id="city" name="city" type="text" placeholder="City" required="">
+										</div>
+									</div>
+			
+			
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">Area</label>
+											<input class="form-control form-control-sm" name="area" id="area" type="text" placeholder="Area" required="">
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">Landmark</label>
+											<input class="form-control form-control-sm" id="landmark" name="landmark" type="text" placeholder="Landmark" required="">
+										</div>
+									</div>
+									
+									<input type="hidden" id="updateid" name="id">
+									
+									
+									<div class="col-12">
+										<div class="form-group mb-0">
+											<button type="submit" class="btn btn-theme full-width">Update Address</button>
+										</div>
+									</div>
+								</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<%- include ('./indexfooter.ejs') %> 
+
+			
+			<!-- Add Payment -->
+			<div class="modal fade" id="add-payment" tabindex="-1" role="dialog" aria-labelledby="add-payment" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content" id="add-payments">
+						<span class="mod-close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Add New Address</h4>
+							<div class="login-form">
+								
+<form action = '/save-address' method='post'>
+								<div class="form-row py-2">
+
+
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-md-0">
+											<label class="bold-simple">Full Name</label>
+										<input type="text" name="name" class="form-control"  placeholder="Full Name" required>
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-md-0">
+											<label class="bold-simple">Email</label>
+										<input type="email" name="email" class="form-control" placeholder="Email" value="<%=result[2][0].email%>" required>
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-12">
+										<div class="form-group">
+											<label class="bold-simple">Mobile Number</label>
+											<div class="input-group input-group-merge">
+											<input class="form-control form-control-sm" name="number" id="checkoutPaymentCardCVV" type="text" placeholder="Mobile Number" required="">
+												
+											</div>
+										</div>
+									</div>
+
+
+									<div class="col-12 col-md-12">
+										<div class="form-group">
+											<label class="bold-simple">Pincode</label>
+											<div class="input-group input-group-merge">
+											<select class="form-control" id="pincode" name="pincode" required></select>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">State</label>
+											<input class="form-control form-control-sm" name="state" id="checkoutPaymentCardNumber" type="text" placeholder="State" required="">
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">City</label>
+											<input class="form-control form-control-sm" id="checkoutPaymentCardName" name="city" type="text" placeholder="City" required="">
+										</div>
+									</div>
+
+
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">Area</label>
+											<input class="form-control form-control-sm" name="area" id="area" type="text" placeholder="Area" required="">
+										</div>
+									</div>
+									
+									<div class="col-12 col-md-6">
+										<div class="form-group mb-4">
+											<label class="bold-simple">Landmark</label>
+											<input class="form-control form-control-sm" id="landmark" name="landmark" type="text" placeholder="Landmark" required="">
+										</div>
+									</div>
+									
+									
+									
+									<div class="col-12">
+										<div class="form-group mb-0">
+											<button type="submit" class="btn btn-theme full-width">Save Address</button>
+										</div>
+									</div>
+								</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Edit Modal -->
+
+
+
+
+
+
+			</div>
+			<!-- End Modal -->
+
+
+
+			<script>
+				$.getJSON(`/api/pincode`, data => {
+    pincode = data
+    fillDropDown1('pincode', data, 'Choose Time Slot', 0)
+  
+})
+
+
+
+function fillDropDown1(id, data, label, selectedid = 0) {
+    $(`#${id}`).empty()
+    // $(`#${id}`).append($('<option>').val("null").text(label))
+
+    $.each(data, (i, item) => {
+        if (item.id == selectedid) {
+            $(`#${id}`).append($('<option selected>').val(`${item.area} - ${item.name}`).text(`${item.area} - ${item.name}`))
+        } else {
+            $(`#${id}`).append($('<option>').val(`${item.area} - ${item.name}`).text(`${item.area} - ${item.name}`))
+        }
+    })
+}
+
+
+
+$('.edit').click(function(){
+	let username = $(this).attr('username')
+	let state = $(this).attr('state')
+	let city = $(this).attr('city')
+	let pincode = $(this).attr('pincode')
+	let area = $(this).attr('area')
+	let landmark = $(this).attr('landmark')
+	let email = $(this).attr('email')
+	let number = $(this).attr('number')
+	let updateid = $(this).attr('updateid')
+
+    $('#name').val(username)
+	$('#email').val(email)
+	$('#city').val(city)
+	$('#pincode').val(pincode)
+	$('#area').val(area)
+	$('#landmark').val(landmark)
+	$('#email').val(email)
+	$('#state').val(state)
+	$('#number').val(number)
+	$('#updateid').val(updateid)
+})
+
+			</script>
+			
+		

@@ -140,8 +140,17 @@ if(req.session.usernumber){
   var query = `select * from category order by id desc;`
   var query1 = `select * from product where categoryid = '${req.query.categoryid}';`
   var query2 =  `select * from subcategory where categoryid = '${req.query.categoryid}';`
+  var query3 = `SELECT * , (select c.name from category c where c.id = categoryid) as categoryname
 
-  pool.query(query+query1+query2,(err,result)=>{
+
+  FROM
+   (SELECT *,
+                 ROW_NUMBER() OVER (PARTITION BY categoryid ORDER BY id DESC) as country_rank
+     FROM subcategory p) ranked
+  WHERE country_rank <= 50 and categoryid !=30 order by categoryid desc;`
+ 
+
+  pool.query(query+query1+query2+query3,(err,result)=>{
     if(err) throw err;
     else if(result[1][0]) res.render('shop',{result:result,login:true})
     else  res.render('not_found',{result,login:true})
@@ -151,8 +160,18 @@ else{
   var query = `select * from category order by id desc;`
   var query1 = `select * from product where categoryid = '${req.query.categoryid}';`
   var query2 =  `select * from subcategory where categoryid = '${req.query.categoryid}';`
-  pool.query(query+query1+query2,(err,result)=>{
-    if(err) throw err;
+  var query3 = `SELECT * , (select c.name from category c where c.id = categoryid) as categoryname
+
+
+  FROM
+   (SELECT *,
+                 ROW_NUMBER() OVER (PARTITION BY categoryid ORDER BY id DESC) as country_rank
+     FROM subcategory p) ranked
+  WHERE country_rank <= 50 and categoryid !='${req.query.categoryid}' order by categoryid desc;`
+ 
+
+  pool.query(query+query1+query2+query3,(err,result)=>{
+     if(err) throw err;
     else if(result[1][0]) res.render('shop',{result:result,login:true})
     else  res.render('not_found',{result,login:true})
   })
@@ -186,10 +205,11 @@ router.get('/shop/subcategory',(req,res)=>{
     else{
       var query = `select * from category order by id desc;`
       var query1 = `select * from product where subcategoryid = '${req.query.id}';`
-      var query2 =  `select * from subcategory where categoryid = '${rcategoryid}';`
+      var query2 =  `select * from subcategory where categoryid = '${categoryid}';`
       pool.query(query+query1+query2,(err,result)=>{
         if(err) throw err;
-        else  res.render('shop',{result:result,login:false})
+        else if(result[1][0]) res.render('shop',{result:result,login:true})
+        else  res.render('not_found',{result,login:true})
       })
     }
     
@@ -223,7 +243,7 @@ pool.query(`select categoryid from product where id = '${req.query.id}'`,(err,re
       var query4 = `select * from product where categoryid = '${categoryid}' order by id desc limit 8;`
       pool.query(query+query1+query3+query4,(err,result)=>{
         if(err) throw err;
-        else res.render('view-product', { title: 'Express',login:'true' , result : result});
+        else res.render('view-product', { title: 'Express',login:true, result : result});
       })
       
   
@@ -239,7 +259,7 @@ pool.query(`select categoryid from product where id = '${req.query.id}'`,(err,re
 
       pool.query(query+query1+query3+query4,(err,result)=>{
         if(err) throw err;
-        else res.render('view-product', { title: 'Express',login:'false' , result : result});
+        else res.render('view-product', { title: 'Express',login:false , result : result});
   
       })
   
@@ -444,11 +464,11 @@ router.get('/mycart',(req,res)=>{
       else{
 
 if(result[2][0].totalprice > 500) {
-  res.render('cart', { title: 'Express',login:'true',result , shipping_charges : 0 });
+  res.render('cart', { title: 'Express',login:true,result , shipping_charges : 0 });
 
 }
 else {
-  res.render('cart', { title: 'Express',login:'true',result , shipping_charges : 500 });
+  res.render('cart', { title: 'Express',login:true,result , shipping_charges : 500 });
 
 }
 
@@ -476,11 +496,11 @@ else {
      
 
         if(result[2][0].totalprice > 500) {
-          res.render('cart', { title: 'Express',login:'false',result , shipping_charges : 0 });
+          res.render('cart', { title: 'Express',login:false,result , shipping_charges : 0 });
         
         }
         else {
-          res.render('cart', { title: 'Express',login:'false',result , shipping_charges : 500 });
+          res.render('cart', { title: 'Express',login:false,result , shipping_charges : 500 });
         
         }
         
@@ -518,19 +538,34 @@ router.get('/delete',(req,res)=>{
 
 router.get('/checkout',(req,res)=>{
   if(req.session.usernumber){
+
     var query = `select * from category order by id desc;`
    
    var query1 = `select c.* ,
                 (select p.name from product p where p.id = c.booking_id) as bookingname
                 from cart c where c.usernumber = '${req.session.usernumber}';`
-   var query2 = `select sum(price) as totalprice from cart where usernumber = '${req.session.usernumber}';`              
+   var query2 = `select sum(price) as totalprice from cart where usernumber = '${req.session.usernumber}';`  
+   var query3 = `select * from address where usernumber = '${req.session.usernumber}';`            
    
 
-    pool.query(query+query1+query2,(err,result)=>{
+    pool.query(query+query1+query2+query3,(err,result)=>{
       if(err) throw err;
       else {
+
+
+
+       // res.json(result)
         req.session.totalprice = result[2][0].totalprice
-        res.render('checkout', { title: 'Express',login:'true' , result : result });
+
+
+if((+req.session.totalprice) > 500) {
+  shipping_charges = 0
+}
+else {
+ shipping_charges = 500
+}
+
+         res.render('checkout', { title: 'Express',login:true , result : result , shipping_charges });
       } 
     })
    
@@ -562,7 +597,7 @@ router.post('/order-now',(req,res)=>{
   if(req.body.payment_mode == 'online') {
 
     req.session.userfirstname =  req.body.first_name;
-    req.session.userlastname = req.body.last_name;
+  
     req.session.address1 = req.body.address1;
     req.session.address2 = req.body.address2;
     req.session.city = req.body.city;
@@ -634,7 +669,7 @@ router.post('/order-now',(req,res)=>{
     
     
         body['address'] = req.body.address1 + ',' + req.body.address2 + ',' + req.body.city + ',' + req.body.state + ',' + req.body.pincode;
-        body['name'] = req.body.first_name + ' ' + req.body.last_name ;
+        body['name'] = req.body.first_name  ;
     
     
      console.log(req.body)
@@ -658,6 +693,16 @@ router.post('/order-now',(req,res)=>{
           data[i].id = null
           data[i].pincode = req.body.pincode
           data[i].order_date = today
+          data[i].time = req.body.time
+
+          if((+data[i].price) > 500){
+            data[i].price = data[i].price
+            data[i].shipping_charges = 0
+          }
+          else{
+          data[i].price = (+data[i].price) + 500;
+          data[i].shipping_charges = 500
+          }
     
     
          }
@@ -666,7 +711,7 @@ router.post('/order-now',(req,res)=>{
        
     
     for(i=0;i<data.length;i++) {
-      console.log('quantity1',data[i].quantity)
+      console.log('quantity1',data[i])
     
     let quantity = data[i].quantity;
     let booking_id = data[i].booking_id;
@@ -695,7 +740,7 @@ router.post('/order-now',(req,res)=>{
     pool.query(`delete from cart where usernumber = '${req.session.usernumber}'`,(err,result)=>{
       if(err) throw err;
       else {
-         res.redirect('/myorder')
+         res.redirect('/confirmation')
       }
     })
     
@@ -758,7 +803,7 @@ if(req.session.usernumber){
     else if(result[1][0]){
       res.render('shop1',{result:result,login:true})
     }
-    else res.send('no')
+    else res.render('not_found',{result:result,login:true})
   })
 }
 else{
@@ -769,7 +814,8 @@ else{
     else if(result[1][0]){
       res.render('shop1',{result:result,login:false})
     }
-    else res.send('no')
+    else res.render('not_found',{result:result,login:false})
+
   })
 }
 
@@ -924,7 +970,7 @@ router.get('/banner-product',(req,res)=>{
 router.get('/myaccount',(req,res)=>{
   if(req.session.usernumber){
     var query = `select * from category order by id desc;`
-    var query1 = `select * from booking where usernumber = '${req.session.usernumber}' order by id desc;`
+    var query1 = `select * from users where number = '${req.session.usernumber}';`
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
@@ -935,6 +981,30 @@ router.get('/myaccount',(req,res)=>{
  res.redirect('/login')
   }
   
+})
+
+
+
+
+
+
+
+router.post('/myaccount-update', (req, res) => {
+  console.log(req.body)
+  pool.query(`update users set ? where number = ?`, [req.body, req.body.number], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+         res.redirect('/myaccount')
+
+          
+      }
+  })
 })
 
 
@@ -1056,7 +1126,7 @@ router.post('/razorpay-response',(req,res)=>{
   let body = req.body;
 
  body['first_name'] =  req.session.userfirstname ;
- body['last_name'] =    req.session.userlastname ;
+
   body['address1'] =   req.session.address1 ;
   body['address2'] = req.session.address2;
   body['city'] = req.session.city;
@@ -1111,7 +1181,7 @@ router.post('/razorpay-response',(req,res)=>{
     
     
         body['address'] = req.body.address1 + ',' + req.body.address2 + ',' + req.body.city + ',' + req.body.state + ',' + req.body.pincode;
-        body['name'] = req.body.first_name + ' ' + req.body.last_name ;
+        body['name'] = req.body.first_name ;
     
     
      console.log(req.body)
@@ -1173,7 +1243,7 @@ router.post('/razorpay-response',(req,res)=>{
     pool.query(`delete from cart where usernumber = '${req.session.usernumber}'`,(err,result)=>{
       if(err) throw err;
       else {
-         res.redirect('/myorder')
+         res.redirect('/confirmation')
       }
     })
     
@@ -1191,10 +1261,191 @@ router.post('/razorpay-response',(req,res)=>{
 
 
 
+router.get('/address',(req,res)=>{
+  var query = `select * from category order by id desc;`
+  var query1 = `select * from address where usernumber = '${req.session.usernumber}';`
+  var query2 = `select email from users where number = '${req.session.usernumber}';`
+  pool.query(query+query1+query2,(err,result)=>{
+    if(err) throw err;
+    else res.render('myaddress',{result})
+  })
+  
+})
+
+
+
+
+
+
+
+router.post('/save-address',(req,res)=>{
+  let body = req.body;
+  body['usernumber'] = req.session.usernumber
+  pool.query(`insert into address set ?`,req.body , (err,result)=>{
+  if(err) throw err;
+  else res.redirect('/address')
+  })
+})
+
+
+router.get('/delete-address',(req,res)=>{
+  pool.query(`delete from address where id = '${req.query.id}'`,(err,result)=>{
+    if(err) throw err;
+    else res.redirect('/address')
+  })
+})
+
+
+
+
+
+router.post('/update-address', (req, res) => {
+  console.log('data',req.body)
+  pool.query(`update address set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.redirect('/address')
+
+          
+      }
+  })
+})
+
+
+
 router.get('/logout',(req,res)=>{
   req.session.usernumber = null;
   res.redirect('/')
 })
 
+
+
+router.get('/contactus',(req,res)=>{
+  if(req.session.usernumber){
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from category;`
+    pool.query(query+query1,(err,result)=>{
+      if(err) throw err;
+      else  res.render('contact',{login:true,result,msg:''})
+    })
+  }
+  else{
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from category;`
+    pool.query(query+query1,(err,result)=>{
+      if(err) throw err;
+      else  res.render('contact',{login:false,result,msg:''})
+    })
+  }
+ 
+})
+
+
+
+router.get('/faq',(req,res)=>{
+  if(req.session.usernumber){
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from faq where type = 'General Question';`
+    var query2 = `select * from faq where type = 'Wallet Question';`
+    pool.query(query+query1+query2,(err,result)=>{
+      if(err) throw err;
+      else  res.render('faq',{login:true,result})
+    })
+  }
+  else{
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from faq where type = 'General Question';`
+    var query2 = `select * from faq where type = 'Wallet Question';`
+    pool.query(query+query1+query2,(err,result)=>{
+      if(err) throw err;
+      else  res.render('faq',{login:false,result})
+    })
+  }
+ 
+})
+
+
+
+router.post('/contactus/submit',(req,res)=>{
+  let body = req.body;
+  pool.query(`insert into contact set ?`,body,(err,result)=>{
+    if(err) throw err;
+    else
+    {
+
+      if(req.session.usernumber){
+        var query = `select * from category order by id desc;`
+        var query1 = `select * from category;`
+        pool.query(query+query1,(err,result)=>{
+          if(err) throw err;
+          else  res.render('contact',{login:true,result,msg : 'Our Team Will Contact You Soon'})
+        })
+      }
+      else{
+        var query = `select * from category order by id desc;`
+        var query1 = `select * from category;`
+        pool.query(query+query1,(err,result)=>{
+          if(err) throw err;
+          else  res.render('contact',{login:false,result,msg : 'Our Team Will Contact You Soon'})
+        })
+      }
+
+    } 
+
+  })
+})
+
+
+
+router.post('/quename/submit',(req,res)=>{
+  let body = req.body;
+  pool.query(`insert into question set ?`,body,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+router.get('/invoice',(req,res)=>{
+  if(req.session.usernumber){
+    var query = `select * from category order by id desc;`
+    var query1 = `select c.*,
+    (select p.name from product p where p.id = c.booking_id) as bookingname,
+    (select p.image from product p where p.id = c.booking_id) as bookingimage,
+    (select s.name from size s where s.id = (select p.sizeid from product p where p.id = c.booking_id ) ) as productsize
+
+    from booking c where c.orderid = '${req.query.orderid}';`
+    var query2 = `select sum(price) as totalamount from booking where orderid = '${req.query.orderid}';`
+    pool.query(query+query1+query2,(err,result)=>{
+      if(err) throw err;
+      else res.render('invoice',{login:true,result})
+    })
+  }
+  else{
+    res.redirect('/login')
+  }
+})
+
+
+
+router.get('/confirmation',(req,res)=>{
+  if(req.session.usernumber){
+    var query = `select * from category order by id desc;`
+    var query1 = `select * from booking order by id desc limit 1;`
+    pool.query(query+query1,(err,result)=>{
+      if(err) throw err;
+      else res.render('confirmation',{result,login:true})
+    })
+  }
+  else {
+    res.redirect('/login')
+  }
+})
 
 module.exports = router;

@@ -15,8 +15,14 @@
 			<!-- =========================== Add To Cart =================================== -->
 			<section>
 				<div class="container">
+
+					<% if(result[1][0]) { %>
+
 					<div class="row">
 						
+
+
+
 						<div class="col-lg-8 col-md-12 col-sm-12 col-12">
 							<div class="table-responsive">
 								<table class="table">
@@ -114,35 +120,29 @@
 						
 						
 					</div>
+
+
+<% } else { %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-12" style="text-align: center;">
+			<img src="https://lh3.googleusercontent.com/proxy/P1rFXGA-BHEVyuxzT6pnbC34aiPxPNGns8NnCks4gRXCGrnf4IkbMDJqH4iKABnJNdwbqYbCqvLi88RxHiYZzB-Xh5E" style="width: 300px;align-items: center;text-align: center;">
+			<br/>
+		<a href="/"><button class="btn btn-primary">Go To Gome</button></a>
+		</div>
+	</div>
+</div>
+
+	<% } %>
+
+
 				</div>
 			</section>
 			<!-- =========================== Add To Cart =================================== -->
 			
 			<!-- ============================ Call To Action ================================== --> 
-			<section class="theme-bg call_action_wrap-wrap">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							
-							<div class="call_action_wrap">
-								<div class="call_action_wrap-head">
-									<h3>Do You Have Questions ?</h3>
-									<span>We'll help you to grow your career and growth.</span>
-								</div>
-								<div class="newsletter_box">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Subscribe here...">
-										<div class="input-group-append">
-										<button class="btn search_btn" type="button"><i class="fas fa-arrow-alt-circle-right"></i></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</section>
+		
 			<!-- ============================ Call To Action End ================================== -->
 			
 			<!-- ============================ Footer Start ================================== -->

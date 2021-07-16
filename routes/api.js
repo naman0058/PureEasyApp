@@ -1729,6 +1729,26 @@ router.post('/login-check',(req,res)=>{
 
 
 
+
+
+router.get('/pincode',(req,res)=>{
+  pool.query(`select * from pincode order by area`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
 
 

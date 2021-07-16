@@ -25,6 +25,12 @@ router.post('/storeEditId',(req,res)=>{
 })
 
 
+
+
+
+
+
+
 router.post('/insert',upload.single('image'),(req,res)=>{
 	let body = req.body
     body['image'] = req.file.filename;

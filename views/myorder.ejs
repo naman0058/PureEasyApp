@@ -1,220 +1,125 @@
-<%- include ('./indexheader.ejs') %>    
 
-    <!-- header section end -->
 
-    <!-- main content start -->
-
-    <!-- bread crumb section start -->
-    <nav class="breadcrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">cart page </li>
-                    </ol> -->
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- bread crumb section end -->
+<%- include ('./indexheader.ejs') %>
 
 
 
-    <section class="whish-list-section section-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h3 class="title mb-5 pb-3 text-capitalize">Your cart items</h3>
-
-
-                    <% if(!result[0]) { %>
-						<div class="col-lg-4"></div>
-						<div class="col-lg-4">
-							<img src='/images/emptycart.png' style="text-align: center;justify-content: center;">
-
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			<!-- ============================================================== -->
+			<!-- Top header  -->
+			<!-- ============================================================== -->
+			
+		
+			
+			
+			<!-- =========================== My All Orders =================================== -->
+			<section class="gray">
+				<div class="container">
+					<div class="row">
+					
+						<div class="col-lg-3 col-md-3">
+							<nav class="dashboard-nav mb-10 mb-md-0">
+							  <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+								<a class="list-group-item list-group-item-action dropright-toggle active" href="/myorder">
+								  My Order
+								</a>
+								
+							
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/myaccount">
+								  Account Settings
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/address">
+								  Address
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/logout">
+								  Logout
+								</a>
+							  </div>
+							</nav>
 						</div>
-						<div class="col-lg-4"></div>
-            
-						<% } else { %>
+						
+						<div class="col-lg-9 col-md-9">
+						
+							<!-- Order Items -->
+							<div class="card style-2">
+								<div class="card-header">
+									<h4 class="mb-0">My Order</h4>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th scope="col">Image</th>
+                                                    <th>Product</th>
+													<th scope="col">Schedule Time</th>
+													<th scope="col">Price</th>
 
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class="thead-light">
+												
 
-
-
-
-                                <tr>
-                                    <th class="text-center" scope="col">Product Image</th>
-                                    <th class="text-center" scope="col">Product Name</th>
-                                    <th class="text-center" scope="col">Product Price</th>
-                                    <th class="text-center" scope="col">Qty</th>
-                                    <th class="text-center" scope="col">Price</th>
-                                    <th class="text-center" scope="col">action</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-
-
-
-                                <% for(i=0;i<result[1].length;i++) { %>
-
-
-                                <tr>
-                                    <th class="text-center" scope="row">
-                                        <img src="/images/<%=result[1][i].bookingimage%>" alt="img" style="height: 100px;">
-                                    </th>
-                                    <td class="text-center">
-                                        <span class="whish-title"><%=result[1][i].bookingname%></span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-success">Rs. <%=result[1][i].oneprice%></span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="whish-list-price"> Rs. <%=result[1][i].quantity%> </span>
-                                    </td>
+													<th scope="col">Status</th>
+													<th scope="col">Action</th>
+												</tr>
+											</thead>
+											<tbody>
 
 
-                                    <td class="text-center">
-                                        <span class="whish-list-price"> Rs. <%=result[1][i].price%> </span>
-                                    </td>
+                                                <% for(i=0;i<result[1].length;i++) { %>
 
-                                    <td class="text-center">
-                                        <span class="whish-list-price"> <%=result[1][i].status%> </span>
-                                    </td>
+												<tr>
+													<th scope="row">
+														<div class="tbl_cart_product">
+															<div class="tbl_cart_product_thumb m-0">
+																<img src="/images/<%=result[1][i].bookingimage%>" class="img-fluid" alt="">
+															</div>
+                                                            
+														</div>
+													</th>
+                                                    <td><%=result[1][i].bookingname%></td>
+													<td><%=result[1][i].time%></td>
+													
+													<td>Rs. <%=result[1][i].price%></td>
+                                                    <td><%=result[1][i].status%></td>
 
+													<td><a href="/invoice?orderid=<%=result[1][i].orderid%>">
+														<button class="btn btn-link">View Invoice</button>
+													</a>
+													</td>
 
-<% if(result[1][i].status == 'cancel'){ %>
+                                                    <% if(result[1][i].status == 'cancel'){ %>
 
-<% } else { %>
+                                                        <% } else { %>
+                                                        
+                                                            <td><a href="/myorder/cancel?orderid=<%=result[1][i].id%>" class="btn btn-sm btn-theme">Cancel</a></td>
+                                                           
+                                                         </tr>
+                                                        
+                                                        <% } %>
+                                                        
+                                                                                       
+                                                        
+                                                        <% } %>
 
-    <td class="text-center">
-        <a href="/myorder/cancel?orderid=<%=result[1][i].id%>"><button type="btn" class="btn btn-danger">Cancel</button> </a>
-     </td>
-   
- </tr>
+											
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							
+						</div>						
+						
+					</div>
+				</div>
+			</section>
+			<!-- =========================== My All Orders =================================== -->
 
-<% } %>
-
-                               
-
-<% } %>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <% } %>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-   
-    <!-- news letter section start -->
- 
-    <!-- news letter section end -->
-
-
-    <!-- service section start -->
-    <section class="service-section section-mt section-mb">
-        <div class="container">
-            <div class="services">
-                <div class="row mb-n7">
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service1.png" alt="images_not_found">
-                            <h3 class="service-title">100% SECURE PAYMENTS</h3>
-                            <p>Moving your card details to a much more secured place</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service2.png" alt="images_not_found">
-                            <h3 class="service-title">TRUSTPAY</h3>
-                            <p>100% Payment Protection. Easy Return Policy</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service3.png" alt="images_not_found">
-                            <h3 class="service-title">HELP CENTER</h3>
-                            <p>GGot a question? Look no further.Browse our FAQs or submit your query here.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 mb-7">
-                        <div class="service-item">
-                            <img class="service-icon" src="assets/images/icon/service4.png" alt="images_not_found">
-                            <h3 class="service-title">Express Shipping</h3>
-                            <p>Fast, reliable delivery from global warehouses</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- service section end -->
-
-
-    <!-- main content end -->
-
-    <!-- footer section start -->
-    <%- include ('./indexfooter.ejs') %>    
-
-
-
-    <script>
-        $('.add').click(function(){
-     let value = $(this).attr('value')
-     let price = $(this).attr('price')
-     let booking_id = $(this).attr('booking_id');
-     let usernumber = $(this).attr('number');
-     let categoryid = $(this).attr('categoryid');
-
-    
-    
-    
-     let quantity = (+value)+1;
-    
-        $.post('/cart-handler',{quantity,price,booking_id,usernumber,categoryid},data=>{
-                window.location.href = '/mycart'
-          })
-    
-         
-        })
-    
-    
-    
-    
-    
-        $('.minus').click(function(){
-     let value = $(this).attr('value')
-     let price = $(this).attr('price')
-     let booking_id = $(this).attr('booking_id');
-     let usernumber = $(this).attr('number');
-     let categoryid = $(this).attr('categoryid');
-    
-    
-     let quantity = (+value)-1;
-    
-     
-    
-    
-    $.post('/cart-handler',{quantity,price,booking_id,usernumber,categoryid},data=>{
-                window.location.href = '/mycart'
-          })
-    
-         
-        })
-    
-    
-    </script>
+			
+			<!-- ============================ Call To Action ================================== --> 
+		
+			<!-- ============================ Call To Action End ================================== -->
+			
+			<!-- ============================ Footer Start ================================== -->
+<%- include ('./indexfooter.ejs') %> 
+	

@@ -1,0 +1,100 @@
+<%- include ('./indexheader.ejs') %>
+
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			<!-- ============================================================== -->
+			<!-- Top header  -->
+			<!-- ============================================================== -->
+			
+		
+			
+			
+			<!-- =========================== Contact Us =================================== -->
+			<section class="gray">
+				<div class="container">
+                    <h4 class="text-center" style="margin-bottom: 30px;text-align: center;"><%=msg%> </h4>
+				
+					<div class="row mb-4">
+						
+						<!-- <div class="col-lg-4 col-md-4">
+							<div class="contact-box">
+								<img src="assets/img/us-marker.png" class="mx-auto" alt="">
+								<h4>Global Headquarters</h4>
+								810 Clis Road,<br>
+								Indraprash NW11 0PU, India
+							</div>
+						</div>
+						
+						<div class="col-lg-4 col-md-4">
+							<div class="contact-box">
+								<img src="assets/img/india-marker.png" class="mx-auto" alt="">
+								<h4>Evolphin India</h4>
+								virasat@gmail.com<br>
+								my.virasat@gmail.com
+							</div>
+						</div> -->
+						<div class="col-lg-12 col-md-12">
+							<div class="contact-box">
+								<img src="/assets/img/india-marker.png" class="mx-auto" alt="">
+								<h4>130 , near shiv mandir, village badraula, faridabad, Haryana-121101</h4>
+								info.pureasy@gmail.com<br>
+								9650761037
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row mt-5 align-items-center">
+						
+						<div class="col-lg-5 col-md-12 hide-91">
+							<img src="/assets/img/preet-o.png" class="img-fluid rounded" alt="" />
+						</div>
+
+                        
+						<div class="col-lg-7 col-md-12">
+							<div class="contact-form">
+                               
+								<form action='/contactus/submit' method='post'>
+                                    
+									<div class="form-row">
+									
+										<div class="form-group col-md-6">
+										  <label>Name</label>
+										  <input type="text" name="name" class="form-control" placeholder="Name">
+										</div>
+										
+										<div class="form-group col-md-6">
+										  <label>Email</label>
+										  <input type="email" name="email" class="form-control" placeholder="Email">
+										</div>
+									</div>
+									
+									<div class="form-group col-lg-12 col-md-12">
+										<label>Subject</label>
+										<input type="text" name="subject" class="form-control" placeholder="Subject">
+									</div>
+									
+									<div class="form-group col-lg-12 col-md-12">
+										<label>Message</label>
+										<textarea class="form-control" name="message" placeholder="Type Here..."></textarea>
+									</div>
+									
+									<div class="form-group col-lg-12 col-md-12">
+									<button type="submit" class="btn btn-primary">Send Request</button>
+									</div>
+									
+								</form>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</section>
+			<!-- =========================== Contact Us =================================== -->
+
+			
+			
+			
+            <%- include ('./indexfooter.ejs') %>
+		

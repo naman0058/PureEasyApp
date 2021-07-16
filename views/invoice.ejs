@@ -1,0 +1,193 @@
+
+
+<%- include ('./indexheader.ejs') %>
+
+
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			<!-- ============================================================== -->
+			<!-- Top header  -->
+			<!-- ============================================================== -->
+			
+	
+			
+			
+			<!-- =========================== My Order =================================== -->
+			<section class="gray">
+				<div class="container">
+					<div class="row">
+						
+                        <div class="col-lg-3 col-md-3">
+							<nav class="dashboard-nav mb-10 mb-md-0">
+							  <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+								<a class="list-group-item list-group-item-action dropright-toggle active" href="/myorder">
+								  My Order
+								</a>
+								
+							
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/myaccount">
+								  Account Settings
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/address">
+								  Address
+								</a>
+								<a class="list-group-item list-group-item-action dropright-toggle" href="/logout">
+								  Logout
+								</a>
+							  </div>
+							</nav>
+						</div>
+
+						<div class="col-lg-9 col-md-9">
+						
+							<div class="card-body bg-white mb-4">
+								<div class="row">
+									<div class="col-6 col-lg-3">
+										<!-- Heading -->
+										<h6 class="text-muted mb-1">Order No:</h6>
+										<!-- Text -->
+										<p class="mb-lg-0 font-size-sm font-weight-bold"><%=result[1][0].orderid%></p>
+									</div>
+									
+									<div class="col-6 col-lg-3">
+										<!-- Heading -->
+										<h6 class="text-muted mb-1">Delivery date:</h6>
+										<!-- Text -->
+										<p class="mb-lg-0 font-size-sm font-weight-bold">
+											<span><%=result[1][0].time%></span>
+										</p>
+									</div>
+									
+									<div class="col-6 col-lg-3">
+										<!-- Heading -->
+										<h6 class="text-muted mb-1">Status:</h6>
+										<!-- Text -->
+										<p class="mb-0 font-size-sm font-weight-bold"><%=result[1][0].status%></p>
+									</div>
+									
+									<div class="col-6 col-lg-3">
+										<!-- Heading -->
+										<h6 class="text-muted mb-1">Order Amount:</h6>
+										<!-- Text -->
+										<p class="mb-0 font-size-sm font-weight-bold">Rs. <%=result[2][0].totalamount%></p>
+									</div>
+									
+								</div>
+							</div>
+							
+							<!-- Order Items -->
+							<div class="card style-2 mb-4">
+								<div class="card-header">
+									<h4 class="mb-0">Order Item </h4>
+								</div>
+								<div class="card-body">
+									<ul class="item-groups">
+									
+										<!-- Single Items -->
+
+                                        <% for(i=0;i<result[1].length;i++){ %>
+										<li>
+											<div class="row align-items-center">
+												<div class="col-4 col-md-3 col-xl-2">
+													<a href="#"><img src="/images/<%=result[1][i].bookingimage%>" alt="..." class="img-fluid"></a>
+												</div>
+												
+												<div class="col">
+													<!-- Title -->
+													<p class="mb-2 font-size-sm font-weight-bold">
+														<a class="text-body" href="#"><%=result[1][i].bookingname%></a> <br>
+														<span class="theme-cl">Rs. <%=result[1][i].oneprice%></span>
+													</p>
+
+													<!-- Text -->
+													<div class="font-size-sm text-muted">
+														Weight: <%=result[1][i].productsize%> <br>
+														Quantity: <%=result[1][i].quantity%>
+													</div>
+
+												</div>
+											</div>
+										</li>
+										<% } %>
+									
+										
+									</ul>
+								</div>
+							</div>
+							
+							<!-- Total Items -->
+							<div class="card style-2 mb-4">
+								<div class="card-header">
+									<h4 class="mb-0">Total Order</h4>
+								</div>
+								<div class="card-body">
+									<ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+										<li class="list-group-item d-flex">
+											<span>Subtotal</span>
+											<span class="ml-auto">Rs. <%=result[2][0].totalamount - result[1][0].shipping_charges%></span>
+										</li>
+									
+										<li class="list-group-item d-flex">
+											<span>Shipping Charges</span>
+											<span class="ml-auto">Rs. <%=result[1][0].shipping_charges%></span>
+										</li>
+										
+										
+										
+										<li class="list-group-item d-flex font-size-lg font-weight-bold">
+											<span>Total</span>
+											<span class="ml-auto">Rs. <%=result[2][0].totalamount%></span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							
+							<!-- Shipping & Billing -->
+							<div class="card style-2">
+								<div class="card-header">
+									<h4 class="mb-0">Shipping Details</h4>
+								</div>
+								<div class="card-body">
+									<div class="row">
+									
+										<div class="col-12 col-md-6">
+											<!-- Heading -->
+											<p class="mb-2 font-weight-bold">
+											  Shipping Address:
+											</p>
+
+											<p class="mb-7 mb-md-0">
+											  <%=result[1][0].address%>
+											</p>
+										</div>
+										
+										<div class="col-12 col-md-6">
+
+											<!-- Heading -->
+											
+
+											<!-- Heading -->
+											<p class="mb-2 font-weight-bold">
+											  Payment Method:
+											</p>
+
+											<p class="mb-0">
+											 <%=result[1][0].payment_mode%>
+											</p>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			<!-- =========================== My Order =================================== -->
+
+			
+			<!-- ============================ Call To Action ================================== --> 
+<%- include ('./indexfooter.ejs') %> 
+		

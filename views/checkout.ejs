@@ -12,10 +12,48 @@
 			<!-- =========================== Billing Section =================================== -->
 			<section>
 				<div class="container">
+
+
+					
+
+					<form action='/order-now' method='post'>
+					
 					<div class="row">
+
+						
 						
 						<div class="col-lg-8 col-md-12">
-							<form>
+						
+							<div class="table-responsive mb-3">
+								<table class="table table-bordered table-sm table-hover mb-0">
+									<tbody>
+
+                              <% for(i=0;i<result[3].length;i++) { %>
+
+										<tr>
+											<td>
+												<div class="custom-control custom-radio">
+													<input   class="custom-control-input saved_address" 
+													username = '<%=result[3][i].name%>'
+													state = '<%=result[3][i].state%>'
+													city = '<%=result[3][i].city%>'
+													pincode = '<%=result[3][i].pincode%>'
+													landmark = '<%=result[3][i].landmark%>'
+													area = '<%=result[3][i].area%>'
+													email = '<%=result[3][i].email%>'
+													 id="<%=result[3][i].id%>" type="radio">
+													<label class="custom-control-label text-body text-nowrap" for="<%=result[3][i].id%>"><%=result[3][i].name%></label>
+												</div>
+											</td>
+											<td><%=result[3][i].area%> , <%=result[3][i].landmark%>  , <%=result[3][i].state%> ,  <%=result[3][i].pincode%></td>
+										
+										</tr>
+									
+										<% } %>
+									
+									</tbody>
+								</table>
+							</div>
 
 								<!-- Heading -->
 								<h4 class="mb-5">Shipping Details</h4>
@@ -26,19 +64,12 @@
 										<!-- First Name -->
 										<div class="form-group">
 										<label for="checkoutBillingFirstName">First Name *</label>
-										<input class="form-control form-control-sm" id="checkoutBillingFirstName" name="first_name" type="text" placeholder="First Name" required="">
-										</div>
-									</div>
-									
-									<div class="col-12 col-md-6">
-										<!-- Last Name -->
-										<div class="form-group">
-										<label for="checkoutBillingLastName">Last Name *</label>
-										<input class="form-control form-control-sm" name="last_name" id="checkoutBillingLastName" type="text" placeholder="Last Name" required="">
+										<input class="form-control form-control-sm " id="checkoutBillingFirstName" name="first_name" type="text" placeholder="First Name" required="">
 										</div>
 									</div>
 								
-									<div class="col-12">
+								
+									<div class="col-12 col-md-6">
 										<!-- Email -->
 										<div class="form-group">
 										<label for="checkoutBillingEmail">Email *</label>
@@ -62,6 +93,15 @@
 										<input class="form-control form-control-sm" id="checkoutBillingAddressTwo" name="address2" type="text" placeholder="Address Line 2 (optional)">
 										</div>
 									</div>
+
+
+									<div class="col-12 col-md-6">
+										<!-- Town / City -->
+										<div class="form-group">
+										<label for="checkoutBillingState">State *</label>
+										<input class="form-control form-control-sm" id="checkoutBillingState" name="state" type="text" placeholder="State" required="">
+										</div>
+									</div>
 								
 									<div class="col-12 col-md-6">
 										<!-- Town / City -->
@@ -75,7 +115,20 @@
 										<!-- ZIP / Postcode -->
 										<div class="form-group">
 										<label for="checkoutBillingZIP">ZIP / Postcode *</label>
-										<input class="form-control form-control-sm" id="checkoutBillingZIP" name="pincode"  type="text" placeholder="ZIP / Postcode" required="">
+										<select class="form-control" name='pincode' id="pincode" required>
+                                           
+                                        </select>
+									</div>
+									</div>
+
+
+									<div class="col-12 col-md-6">
+										<!-- ZIP / Postcode -->
+										<div class="form-group">
+										<label for="checkoutBillingZIP">Time Slot</label>
+										<select class="form-control" name='time' id="time" required>
+                                           
+                                        </select>
 										</div>
 									</div>
 								
@@ -97,7 +150,7 @@
 										<!-- Radio -->
 										<div class="custom-control custom-radio">
 											<!-- Input -->
-											<input class="custom-control-input" id="checkoutPaymentCard" name="payment" type="radio" >
+											<input class="custom-control-input" id="checkoutPaymentCard" name="payment_mode" value="online" type="radio" >
 											<!-- Label -->
 											<label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentCard">Pay Online <img class="ml-2" src="assets/img/card.png" alt="..."></label>
 										</div>
@@ -113,7 +166,7 @@
 										<!-- Radio -->
 										<div class="custom-control custom-radio">
 											<!-- Input -->
-											<input class="custom-control-input" id="checkoutPaymentPaypal" name="payment" type="radio" data-toggle="collapse" data-action="hide" data-target="#checkoutPaymentCardCollapse">
+											<input class="custom-control-input" id="checkoutPaymentPaypal" name="payment_mode" value="cash" type="radio" required data-toggle="collapse" data-action="hide" data-target="#checkoutPaymentCardCollapse">
 											<!-- Label -->
 											<label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentPaypal">Cash On Delivery</label>
 										</div>
@@ -136,13 +189,13 @@
 											<h5 class="mb-0">Order Summary</h5>
 										</li>
 										<li class="list-group-item d-flex">
-											<span>Subtotal</span> <span class="ml-auto font-size-sm">$89.00</span>
+											<span>Subtotal</span> <span class="ml-auto font-size-sm">Rs. <%=result[2][0].totalprice%></span>
 										</li>
 										<li class="list-group-item d-flex">
-											<span>Tax</span> <span class="ml-auto font-size-sm">$00.00</span>
+											<span>Tax</span> <span class="ml-auto font-size-sm">Rs. <%=shipping_charges%></span>
 										</li>
 										<li class="list-group-item d-flex font-size-lg font-weight-bold">
-											<span>Total</span> <span class="ml-auto font-size-sm">$89.00</span>
+											<span>Total</span> <span class="ml-auto font-size-sm">Rs. <%=result[2][0].totalprice + shipping_charges%></span>
 										</li>
 										<li class="list-group-item font-size-sm text-center text-gray-500">
 											Shipping cost calculated at Checkout *
@@ -150,9 +203,14 @@
 									</ul>
 								</div>
 							</div>
-							<a class="btn btn-block btn-dark mb-2" href="#">Proceed to Checkout</a>
+							<button type="submit" class="btn btn-dark btn-block">Proceed to Checkout</button>
+
+
 							<a class="px-0 text-body" href="#"><i class="ti-back-left mr-2"></i> Continue Shopping</a>
 						</div>
+
+
+					</form>
 						
 					</div>
 				</div>
@@ -160,30 +218,7 @@
 			<!-- =========================== Billing Section =================================== -->
 			
 			<!-- ============================ Call To Action ================================== --> 
-			<section class="theme-bg call_action_wrap-wrap">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							
-							<div class="call_action_wrap">
-								<div class="call_action_wrap-head">
-									<h3>Do You Have Questions ?</h3>
-									<span>We'll help you to grow your career and growth.</span>
-								</div>
-								<div class="newsletter_box">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Subscribe here...">
-										<div class="input-group-append">
-										<button class="btn search_btn" type="button"><i class="fas fa-arrow-alt-circle-right"></i></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</section>
+			
 			<!-- ============================ Call To Action End ================================== -->
 			
 			<!-- ============================ Footer Start ================================== -->
@@ -201,6 +236,13 @@ $.getJSON(`/api/time`, data => {
 })
 
 
+$.getJSON(`/api/pincode`, data => {
+    pincode = data
+    fillDropDown1('pincode', data, 'Choose Time Slot', 0)
+  
+})
+
+
 function fillDropDown(id, data, label, selectedid = 0) {
     $(`#${id}`).empty()
     // $(`#${id}`).append($('<option>').val("null").text(label))
@@ -214,6 +256,42 @@ function fillDropDown(id, data, label, selectedid = 0) {
     })
 }
 
+
+
+
+function fillDropDown1(id, data, label, selectedid = 0) {
+    $(`#${id}`).empty()
+    // $(`#${id}`).append($('<option>').val("null").text(label))
+
+    $.each(data, (i, item) => {
+        if (item.id == selectedid) {
+            $(`#${id}`).append($('<option selected>').val(`${item.area} - ${item.name}`).text(`${item.area} - ${item.name}`))
+        } else {
+            $(`#${id}`).append($('<option>').val(`${item.area} - ${item.name}`).text(`${item.area} - ${item.name}`))
+        }
+    })
+}
+
+
+$('.saved_address').click(function(){
+	let username = $(this).attr('username')
+	let state = $(this).attr('state')
+	let city = $(this).attr('city')
+	let pincode = $(this).attr('pincode')
+	let area = $(this).attr('area')
+	let landmark = $(this).attr('landmark')
+	let email = $(this).attr('email')
+
+
+	$('#checkoutBillingFirstName').val(username)
+	$('#checkoutBillingAddress').val(area)
+	$('#checkoutBillingAddressTwo').val(landmark)
+	$('#checkoutBillingTown').val(city)
+	$('#checkoutBillingState').val(state)
+	$('#pincode').val(pincode)
+	$('#checkoutBillingEmail').val(email)
+
+})
 
 </script>
 
