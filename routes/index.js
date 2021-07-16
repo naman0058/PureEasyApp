@@ -1023,7 +1023,7 @@ router.get('/about',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true,msg:'about'})
+      else res.render('website_customize',{result,login:true,msg:'about',title:'About Us'})
     })
   }
   else{
@@ -1032,7 +1032,7 @@ router.get('/about',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false,msg:'about'})
+      else res.render('website_customize',{result,login:false,msg:'about',title:'About Us'})
     })
   }
 })
@@ -1057,7 +1057,7 @@ router.get('/privacy-policy',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true,msg:'pp'})
+      else res.render('website_customize',{result,login:true,msg:'pp',title:'Privacy Ploicy'})
     })
   }
   else{
@@ -1066,7 +1066,7 @@ router.get('/privacy-policy',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false,msg:'pp'})
+      else res.render('website_customize',{result,login:false,msg:'pp',title:'Privacy Ploicy'})
     })
   }
 })
@@ -1081,7 +1081,7 @@ router.get('/terms-and-conditions',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true,msg:'tc'})
+      else res.render('website_customize',{result,login:true,msg:'tc',title:'Terms & Conditions'})
     })
   }
   else{
@@ -1090,7 +1090,7 @@ router.get('/terms-and-conditions',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false,msg:'tc'})
+      else res.render('website_customize',{result,login:false,msg:'tc',title:'Terms & Conditions'})
     })
   }
 })
@@ -1109,7 +1109,7 @@ router.get('/refund-policy',(req,res)=>{
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
      
-      else res.render('website_customize',{result,login:true,msg:'rp'})
+      else res.render('website_customize',{result,login:true,msg:'rp',title:'Refund Policy'})
     })
   }
   else{
@@ -1118,7 +1118,7 @@ router.get('/refund-policy',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('website_customize',{result,login:false,msg:'rp'})
+      else res.render('website_customize',{result,login:false,msg:'rp',title:'Refund Policy'})
     })
   }
 })
