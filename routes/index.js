@@ -1290,7 +1290,7 @@ router.get('/address',(req,res)=>{
     var query2 = `select email from users where number = '${req.session.usernumber}';`
     pool.query(query+query1+query2,(err,result)=>{
       if(err) throw err;
-      else res.render('myaddress',{result})
+      else res.render('myaddress',{result,login:true})
     })
   }
   else{
