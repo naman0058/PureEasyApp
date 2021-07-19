@@ -633,8 +633,8 @@ router.post("/cart-handler", (req, res) => {
 
 router.post('/get-single-product-details',(req,res)=>{
     pool.query(`select p.*, 
-    (select c.quantity from cart c where c.booking_id = p.id and c.usernumber = '${req.body.number}' ) as userquantity,
-    (select w.id from wishlist w where w.booking_id = p.id and w.usernumber = '${req.body.number}') as iswishlist
+    (select c.quantity from cart c where c.booking_id = '${req.body.id}' and c.usernumber = '${req.body.number}' ) as userquantity,
+    (select w.id from wishlist w where w.booking_id ='${req.body.id}' and w.usernumber = '${req.body.number}') as iswishlist
     from product p where p.id = '${req.body.id}'`,(err,result)=>{
         if(err) throw err;
         else res.json(result);
