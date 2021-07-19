@@ -154,18 +154,18 @@
                                             <div class="woo_product_caption center">
                                             
                                                 <div class="woo_title">
-                                                    <h4 class="woo_pro_title"><a href="/product?id=<%=result[3][i].id%>"><%=result[3][i].name%></a></h4>
+                                                    <h4 class="woo_pro_title" style="font-size: 20px;margin-top: 10px;"><a href="/product?id=<%=result[3][i].id%>"><%=result[3][i].name%></a></h4>
                                                 </div>
 
                                                 
                                                 <div class="woo_price">
 
                                                     <% if(result[3][i].discount == 0) { %>
-                                                        <h6>Rs. <%=result[3][i].net_amount%></h6>
+                                                        <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[3][i].net_amount%></h6>
 
 
                                                         <% } else { %>
-                                                            <h6>Rs. <%=result[3][i].net_amount%><span class="less_price">Rs. <%=result[3][i].price%></span></h6>
+                                                            <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[3][i].net_amount%><span class="less_price">Rs. <%=result[3][i].price%></span></h6>
 
                                                             <% } %>
 

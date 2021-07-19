@@ -61,7 +61,7 @@
 
 
 
-                                <% for(i=0;i<8;i++) { %>
+                                <% for(i=0;i<result[0].length;i++) { %>
 
 
                                     <div class="item">
@@ -135,18 +135,18 @@
                                             <div class="woo_product_caption center">
                                             
                                                 <div class="woo_title">
-                                                    <h4 class="woo_pro_title"><a href="/product?id=<%=result[2][j].productid%>"><%=result[2][j].productname%></a></h4>
+                                                    <h4 class="woo_pro_title" style="font-size: 20px;margin-top: 10px;"><a href="/product?id=<%=result[2][j].productid%>"><%=result[2][j].productname%>d</a></h4>
                                                 </div>
 
                                                 
                                                 <div class="woo_price">
 
                                                     <% if(result[2][j].productdiscount == 0) { %>
-                                                        <h6>Rs. <%=result[2][j].productnetamount%></h6>
+                                                        <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[2][j].productnetamount%></h6>
 
 
                                                         <% } else { %>
-                                                            <h6>Rs. <%=result[2][j].productnetamount%><span class="less_price">Rs. <%=result[2][j].productprice%></span></h6>
+                                                            <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[2][j].productnetamount%><span class="less_price">Rs. <%=result[2][j].productprice%></span></h6>
 
                                                             <% } %>
 

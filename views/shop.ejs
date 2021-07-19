@@ -27,7 +27,7 @@
 					<div class="row">
 					
 						<!-- Single Product -->
-						<div class="col-lg-4 col-md-12">
+						<div class="col-lg-3 col-md-12">
 							<div class="search-sidebar sm-sidebar" id="filter_search"  style="left:0;">
 								<div class="search-sidebar_header">
 									<!-- <h4 class="ssh_heading">Close Filter</h4> -->
@@ -74,7 +74,7 @@
 									</div>
 									
 							
-								
+								 
 								
 				
 									
@@ -85,7 +85,7 @@
 							</div>
 						</div>
 						
-						<div class="col-lg-8 col-md-12">
+						<div class="col-lg-9 col-md-12">
 							
 							<!-- Banner -->
 						
@@ -112,16 +112,16 @@
 											
 											</div>
 											<div class="woo_title">
-												<h4 class="woo_pro_title"><a href="/product?id=<%=result[1][i].id%>"><%=result[1][i].name%></a></h4>
+												<h4 class="woo_pro_title" style="font-size: 20px;margin-top: 10px;"><a href="/product?id=<%=result[1][i].id%>"><%=result[1][i].name%></a></h4>
 											</div>
 											<div class="woo_price">
 
 
                         <% if(result[1][i].discount == 0) { %>
-                          <h6>Rs. <%=result[1][i].net_amount%></h6>
+                          <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[1][i].net_amount%></h6>
                                                   <% } else { %>
                                                       
-                                                      <h6>Rs. <%=result[1][i].net_amount%><span class="less_price">Rs. <%=result[1][i].price%></span></h6>
+                                                      <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[1][i].net_amount%><span class="less_price">Rs. <%=result[1][i].price%></span></h6>
   
   
                                                       <% } %>
@@ -129,7 +129,8 @@
                       
                       </div>
 
-
+					  <div class="woo_price">
+						<div class="sec-heading-flex-last">
                       <% if(result[1][i].quantity == 0 || result[1][i].quantity < 0) { %>
 
                         <a  class="btn btn-danger"  style="margin-top: 20px;color: white;">Out of stock</a>
@@ -139,7 +140,8 @@
                             <a  class="btn btn-theme addToCart" id="addToCart" categoryname = '<%=result[1][i].name%>' subcategoryid="<%=result[1][i].subcategoryid%>"  booking_id="<%=result[1][i].id%>" price="<%=result[1][i].net_amount%>" categoryid = '<%=result[1][i].categoryid%>' style="margin-top: 20px;color: white;">Add to cart</a>
 
                             <% } %>
-
+						</div>
+						</div>
 
 										</div>
 															

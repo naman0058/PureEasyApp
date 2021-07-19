@@ -44,21 +44,22 @@
 										<div class="woo_product_caption center">
 											
 											<div class="woo_title">
-												<h4 class="woo_pro_title"><a href="/product?id=<%=result[1][i].productid%>"><%=result[1][i].productname%></a></h4>
+												<h4 class="woo_pro_title" style="font-size: 20px;margin-top: 10px;"><a href="/product?id=<%=result[1][i].productid%>"><%=result[1][i].productname%></a></h4>
 											</div>
 											<div class="woo_price">
 
                                                 <% if(result[1][i].productdiscount == 0) { %>
-												<h6>Rs. <%=result[1][i].productnetamount%></h6>
+												<h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[1][i].productnetamount%></h6>
                                                 <% } else { %>
                                                     
-                                                    <h6>Rs. <%=result[1][i].productnetamount%><span class="less_price">Rs. <%=result[1][i].productprice%></span></h6>
+                                                    <h6 style="font-size: 18px;margin-top: 10px;">Rs. <%=result[1][i].productnetamount%><span class="less_price">Rs. <%=result[1][i].productprice%></span></h6>
 
 
                                                     <% } %>
                                             </div>
 
-
+											<div class="woo_price">
+												<div class="sec-heading-flex-last">
                                             <% if(result[1][i].productquantity == 0 || result[1][i].productquantity < 0) { %>
 
                                                 <a  class="btn btn-danger"  style="margin-top: 20px;color: white;">Out of stock</a>
@@ -68,7 +69,8 @@
                                                     <a  class="btn btn-theme addToCart" id="addToCart" categoryname = '<%=result[1][i].productname%>' subcategoryid="<%=result[1][i].productsubcategoryid%>"  booking_id="<%=result[1][i].productid%>" price="<%=result[1][i].productnetamount%>" categoryid = '<%=result[1][i].productcategoryid%>' style="margin-top: 20px;color: white;">Add to cart</a>
 
                                                     <% } %>
-
+												</div>
+											</div>
 
 										</div>
 										

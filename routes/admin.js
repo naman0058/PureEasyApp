@@ -102,6 +102,8 @@ router.get('/update-status',(req,res)=>{
 })
 
 
+
+
 router.post('/update/booking/status',(req,res)=>{
     pool.query(`update booking set ? where id = ?`, [req.body, req.body.id], (err, result) => {
 

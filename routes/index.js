@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
      (SELECT *,
                    ROW_NUMBER() OVER (PARTITION BY bannerid ORDER BY id DESC) as country_rank
        FROM promotional_text_management p) ranked
-    WHERE country_rank <= 5 order by bannerid desc;`
+    WHERE country_rank <= 5 order by bannerid desc , productquantity desc;`
   var query3 = `select * from promotional_text order by id desc;`
   var query4 = `select * from cart where usernumber = '${req.session.number}';`
   var query5 = `select * from banner where type = 'Bottom Banner' order by id desc;`
@@ -52,7 +52,7 @@ router.get('/', function(req, res, next) {
      (SELECT *,
                    ROW_NUMBER() OVER (PARTITION BY bannerid ORDER BY id DESC) as country_rank
        FROM promotional_text_management p) ranked
-    WHERE country_rank <= 5 order by bannerid desc;`
+    WHERE country_rank <= 5 order by bannerid desc , productquantity desc;`
   var query3 = `select * from promotional_text order by id desc;`
   var query4 = `select * from cart where usernumber = '${req.session.number}';`
   var query5 = `select * from banner where type = 'Bottom Banner' order by id desc;`
@@ -138,7 +138,7 @@ router.get('/shop',(req,res)=>{
 
 if(req.session.usernumber){
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where categoryid = '${req.query.categoryid}';`
+  var query1 = `select * from product where categoryid = '${req.query.categoryid}' order by quantity desc;`
   var query2 =  `select * from subcategory where categoryid = '${req.query.categoryid}';`
   var query3 = `SELECT * , (select c.name from category c where c.id = categoryid) as categoryname
 
@@ -158,7 +158,7 @@ if(req.session.usernumber){
 }
 else{
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where categoryid = '${req.query.categoryid}';`
+  var query1 = `select * from product where categoryid = '${req.query.categoryid}' order by quantity desc;`
   var query2 =  `select * from subcategory where categoryid = '${req.query.categoryid}';`
   var query3 = `SELECT * , (select c.name from category c where c.id = categoryid) as categoryname
 
@@ -539,35 +539,54 @@ router.get('/delete',(req,res)=>{
 router.get('/checkout',(req,res)=>{
   if(req.session.usernumber){
 
-    var query = `select * from category order by id desc;`
-   
-   var query1 = `select c.* ,
-                (select p.name from product p where p.id = c.booking_id) as bookingname
-                from cart c where c.usernumber = '${req.session.usernumber}';`
-   var query2 = `select sum(price) as totalprice from cart where usernumber = '${req.session.usernumber}';`  
-   var query3 = `select * from address where usernumber = '${req.session.usernumber}';`            
-   
 
-    pool.query(query+query1+query2+query3,(err,result)=>{
+    pool.query(`select email from users where number = '${req.session.usernumber}'`,(err,result)=>{
       if(err) throw err;
+      else if(result[0].email==null || result[0].email == ''){
+        req.session.newuser = '1';
+        var query = `select * from category order by id desc;`
+        var query1 = `select * from users where number = '${req.session.usernumber}';`
+    
+        pool.query(query+query1,(err,result)=>{
+          if(err) throw err;
+          else res.render('myaccount',{result:result,login:true,msg:'Please Update Your Profile To Checkout'})
+        })
+      }
       else {
-
-
-
-       // res.json(result)
-        req.session.totalprice = result[2][0].totalprice
-
-
-if((+req.session.totalprice) > 500) {
-  shipping_charges = 0
-}
-else {
- shipping_charges = 500
-}
-
-         res.render('checkout', { title: 'Express',login:true , result : result , shipping_charges });
-      } 
+        var query = `select * from category order by id desc;`
+   
+        var query1 = `select c.* ,
+                     (select p.name from product p where p.id = c.booking_id) as bookingname
+                     from cart c where c.usernumber = '${req.session.usernumber}';`
+        var query2 = `select sum(price) as totalprice from cart where usernumber = '${req.session.usernumber}';`  
+        var query3 = `select * from address where usernumber = '${req.session.usernumber}';` 
+        var query4 = `select name,email from users where number = '${req.session.usernumber}'`           
+        
+     
+         pool.query(query+query1+query2+query3+query4,(err,result)=>{
+           if(err) throw err;
+           else {
+     
+     
+     
+            // res.json(result)
+             req.session.totalprice = result[2][0].totalprice
+     
+     
+     if((+req.session.totalprice) > 500) {
+       shipping_charges = 0
+     }
+     else {
+      shipping_charges = 500
+     }
+     
+              res.render('checkout', { title: 'Express',login:true , result : result , shipping_charges });
+           } 
+         })
+      }
     })
+
+ 
    
 
   }
@@ -803,7 +822,7 @@ router.get('/search',(req,res)=>{
 
 if(req.session.usernumber){
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where keywords Like '%${req.query.search}%';`
+  var query1 = `select * from product where keywords Like '%${req.query.search}%' order by quantity desc;`
   pool.query(query+query1,(err,result)=>{
     if(err) throw err;
     else if(result[1][0]){
@@ -814,7 +833,7 @@ if(req.session.usernumber){
 }
 else{
   var query = `select * from category order by id desc;`
-  var query1 = `select * from product where keywords Like '%${req.query.search}%';`
+  var query1 = `select * from product where keywords Like '%${req.query.search}%' order by quantity desc;`
   pool.query(query+query1,(err,result)=>{
     if(err) throw err;
     else if(result[1][0]){
@@ -897,7 +916,7 @@ router.get('/view-all-product',(req,res)=>{
     (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
     (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
     (select p.net_amount from product p where p.id = t.productid) as productnetamount 
-    from promotional_text_management t where t.bannerid = '${req.query.id}' `
+    from promotional_text_management t where t.bannerid = '${req.query.id}' order by productquantity desc `
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
       else if(result[1][0]) res.render('view_all_product',{result:result,login:true})
@@ -915,7 +934,7 @@ router.get('/view-all-product',(req,res)=>{
     (select p.categoryid from product p where p.id = t.productid) as productcategoryid,
     (select p.subcategoryid from product p where p.id = t.productid) as productsubcategoryid,
     (select p.net_amount from product p where p.id = t.productid) as productnetamount 
-    from promotional_text_management t where t.bannerid = '${req.query.id}' ;`
+    from promotional_text_management t where t.bannerid = '${req.query.id}' order by productquantity desc ;`
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
       else  res.render('view_all_product',{result:result,login:false})
@@ -980,7 +999,7 @@ router.get('/myaccount',(req,res)=>{
 
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('myaccount',{result:result,login:true})
+      else res.render('myaccount',{result:result,login:true,msg:''})
     })
   }
   else{
@@ -1006,7 +1025,16 @@ router.post('/myaccount-update', (req, res) => {
           })
       }
       else {
-         res.redirect('/myaccount')
+
+  if(req.session.newuser){
+    req.session.newuser = null;
+        res.redirect('/checkout')
+  }
+  else {
+    res.redirect('/myaccount')
+
+  }
+
 
           
       }

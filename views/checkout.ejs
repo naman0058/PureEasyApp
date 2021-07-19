@@ -64,7 +64,7 @@
 										<!-- First Name -->
 										<div class="form-group">
 										<label for="checkoutBillingFirstName">First Name *</label>
-										<input class="form-control form-control-sm " id="checkoutBillingFirstName" name="first_name" type="text" placeholder="First Name" required="">
+										<input class="form-control form-control-sm " id="checkoutBillingFirstName" name="first_name" type="text" value="<%=result[4][0].name%>" placeholder="First Name" required="">
 										</div>
 									</div>
 								
@@ -73,7 +73,7 @@
 										<!-- Email -->
 										<div class="form-group">
 										<label for="checkoutBillingEmail">Email *</label>
-										<input class="form-control form-control-sm" id="checkoutBillingEmail" name="email" type="email" placeholder="Email" required="">
+										<input class="form-control form-control-sm" id="checkoutBillingEmail" name="email" type="email" placeholder="Email" value="<%=result[4][0].email%>" required="">
 										</div>
 									</div>
 								
