@@ -1,3 +1,42 @@
+$(function () {
+$('#result').on('click', 'th', function() {
+
+  
+        var index = $(this).index(),
+            rows = [],
+            thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
+  
+        $('#myTable th').removeClass('asc desc');
+        $(this).addClass(thClass);
+  
+        $('#myTable tbody tr').each(function (index, row) {
+          rows.push($(row).detach());
+        });
+  
+        rows.sort(function (a, b) {
+          var aValue = $(a).find('td').eq(index).text(),
+              bValue = $(b).find('td').eq(index).text();
+  
+          return aValue > bValue
+               ? 1
+               : aValue < bValue
+               ? -1
+               : 0;
+        });
+  
+        if ($(this).hasClass('desc')) {
+          rows.reverse();
+        }
+  
+        $.each(rows, function (index, row) {
+          $('#myTable tbody').append(row);
+        });
+      });
+  });
+
+
+
+
 let categories = []
 
 let table = 'category'
@@ -17,11 +56,11 @@ document.write('<script type="text/javascript" src="/javascripts/common.js" ></s
 
 
 function makeTable(categories){
-      let table = ` <div class="table-responsive">
+    let table = ` <div class="table-responsive">
 
-      <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
-      <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;'>
-                
+    <button type="button" id="back" class="btn btn-primary" style="margin:20px">BacK</button>
+    <input type="text"  class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Here.." title="Type in a name" style='margin-bottom:20px;margin-left:20px;margin-right:20px;'>
+              
 <table id="myTable" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
@@ -51,11 +90,11 @@ table+=`</tbody>
 </table>
 </div>
 
-    
-  <!-- End Row -->`
-      $('#result').html(table)
-      $('#insertdiv').hide()
-      $('#result').show()
+  
+<!-- End Row -->`
+    $('#result').html(table)
+    $('#insertdiv').hide()
+    $('#result').show()
 }
 
 

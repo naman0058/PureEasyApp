@@ -1188,7 +1188,10 @@ pool.query(`select * from deposit_cash where number = '${req.body.number}'`,(err
 
 
   router.post('/total-amount',(req,res)=>{
-    pool.query(`select sum(price) as total_amount from cart where usernumber = '${req.body.number}'`,(err,result)=>{
+    console.log(req.body)
+    var query = `select sum(price) as total_amount from cart where usernumber = '${req.body.number}';`
+    var query1 = `select sum(quantity) as counter from cart where usernumber = '${req.body.number}';`
+    pool.query(query+query1,(err,result)=>{
           if(err) throw err;
           else res.json(result)
     })
@@ -1743,7 +1746,12 @@ router.get('/pincode',(req,res)=>{
 
 
 
-
+router.post('/wallet',(req,res)=>{
+  pool.query(`select * from users where number = '${req.body.number}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
 
 
 

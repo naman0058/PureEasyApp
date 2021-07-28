@@ -1,4 +1,32 @@
 <%- include ('./adminheader.ejs') %>
+
+
+
+<style>
+  #myInput th,
+#myInput td {
+  padding: 10px 30px;
+}
+
+#myInput th {
+  background: #333;
+  color: white;
+}
+
+#myInput th.asc:after {
+  display: inline;
+  content: '↓';
+}
+
+#myInput th.desc:after {
+  display: inline;
+  content: '↑';
+}
+
+#myInput td {
+  background: #ccc;
+}
+</style>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
