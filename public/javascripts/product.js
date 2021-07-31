@@ -202,6 +202,10 @@ $('#result').on('click', '.edits', function () {
            `
            $('.peditor').html(table)
 
+
+    let pi1 = `<img src='/images/${result.image}' style='width:140px;height:140px'>`
+    $('#pi1').html(pi1)       
+
     
 })
 
