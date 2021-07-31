@@ -570,6 +570,49 @@ router.post('/orders',(req,res)=>{
 
 
 router.get('/time',(req,res)=>{
+
+  var today = new Date();
+  var newdate = new Date();
+  newdate.setDate(today.getDate() + 5);
+  
+  
+  
+  
+  var dd = today.getDate();
+  
+  var futuretime = today.getHours() + 2 + ":" + today.getMinutes();
+  
+  
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  var a = newdate.getDate()
+  var b = newdate.getMonth() + 1;
+  if (dd < 10) {
+    dd = '0' + dd;
+  
+  }
+  
+  if (a < 10) {
+    a = '0' + a;
+  }
+  
+  
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  
+  
+  if (b < 10) {
+    b = '0' + b;
+  }
+  today = yyyy + '-' + mm + '-' + dd;
+  
+  var my = newdate.toLocaleDateString()
+  var my1 = newdate.getFullYear() + '-' + b + '-' + a
+  /*onsole.log(today)
+  //console.log(newdate)
+  console.log(my1)*/
+
     pool.query(`select * from time where date>= CURDATE() and status = 'Available'`,(err,result)=>{
         if(err) throw err;
         else res.json(result)
@@ -1436,7 +1479,75 @@ router.get('/get-faq/delete',(req,res)=>{
 
 
 
+router.post('/update-faq', (req, res) => {
+  pool.query(`update faq set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully update'
+          })
 
+          
+      }
+  })
+})
+
+
+
+
+
+router.get('/all-website-customize',(req,res)=>{
+  pool.query(`select * from website_customize`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+
+
+
+
+router.get('/get-faq/website',(req,res)=>{
+  pool.query(`delete from website_customize where id = '${req.query.id}'`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result)
+  })
+})
+
+
+
+
+router.post('/update-website', (req, res) => {
+  pool.query(`update website_customize set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+      if(err) {
+          res.json({
+              status:500,
+              type : 'error',
+              description:err
+          })
+      }
+      else {
+          res.json({
+              status:200,
+              type : 'success',
+              description:'successfully update'
+          })
+
+          
+      }
+  })
+})
 
 
 
@@ -1755,6 +1866,13 @@ router.post('/wallet',(req,res)=>{
 
 
 
+
+router.get('/charges',(req,res)=>{
+  pool.query(`select * from delivery_charges`,(err,result)=>{
+    if(err) throw err;
+    else res.json(result);
+  })
+})
 
 
 

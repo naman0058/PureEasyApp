@@ -54,7 +54,6 @@ function makeTable(categories){
 <th>Image</th>
 <th>Category Name</th>
 
-<th>Daily Essencial</th>
 <th>Options</th>
 </tr>
 </thead>
@@ -68,7 +67,7 @@ table+=`<tr>
 </td>
 <td>${item.categoryname}</td>
 
-<td>${item.essencial}</td>
+
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
 <a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>

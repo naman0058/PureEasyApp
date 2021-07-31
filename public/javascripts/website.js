@@ -62,7 +62,7 @@ function fillDropDown(id, data, label, selectedid = 0) {
 }
 
 $('#show').click(function(){
-$.getJSON(`/api/get-faq`, data => {
+$.getJSON(`/api/all-website-customize`, data => {
     console.log(data)
     services = data
     makeTable(data)
@@ -85,7 +85,7 @@ function makeTable(categories){
 <thead>
 <tr>
 <th>Type</th>
-<th>Questions</th>
+
 
 <th>Option</th>
 
@@ -96,7 +96,6 @@ function makeTable(categories){
 $.each(categories,(i,item)=>{
 table+=`<tr>
 
-<td>${item.type}</td>
 <td>${item.name}</td>
 
 
@@ -123,7 +122,7 @@ table+=`</tbody>
 
 $('#result').on('click', '.deleted', function () {
     const id = $(this).attr('id')
-    $.get(`/get-faq/delete`, { id }, data => {
+    $.get(`/get-website/delete`, { id }, data => {
         refresh()
     })
 })
@@ -196,13 +195,12 @@ $('#update').click(function () {  //data insert in database
 // alert('hi')
     let updateobj = {
         id: $('#pid').val(),
-        type: $('#pcategoryid').val(),
        name: $('#pname').val(),
         content:content
        
     }
 
-    $.post(`/api/update-faq`, updateobj, function (data) {
+    $.post(`/api/update-website`, updateobj, function (data) {
       update()
     })
 })
@@ -267,7 +265,7 @@ $('#new').mouseenter(function () {
  })
  
  function refresh() {
-     $.getJSON(`/api/get-faql`, data => {
+     $.getJSON(`/api/all-website-customize`, data => {
          makeTable(data)
      })
  }

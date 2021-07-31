@@ -164,6 +164,33 @@
             </div>
           </div>
 
+
+          <div class="row">
+            <div class="col-12 col-sm-12 col-lg-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Set Delivery Charges</h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label>Set Delivery Charges </label>
+                      <input type="text" name="" id="set_charges" class="form-control" value="<%=result[9][0].set_charges%>">
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label>Delivery Charges</label>
+                      <input type="text" name="" id="delivery_charges" class="form-control" value="<%=result[9][0].charges%>">
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-primary" id="charges_set">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
         
          
           <div class="row">
@@ -446,6 +473,16 @@ function fillDropDown(id, data, label, selectedid = 0) {
         }
     })
 }
+
+
+$('#charges_set').click(function(){
+  let charges = $('#delivery_charges').val()
+  let set_charges = $('#set_charges').val()
+
+  $.post('/admin/charges/update',{charges,set_charges},data=>{
+         window.location.reload()
+  })
+})
 
 
 

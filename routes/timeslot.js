@@ -28,6 +28,7 @@ router.post('/storeEditId',(req,res)=>{
 router.post('/insert',(req,res)=>{
 	let body = req.body
     
+    
 	pool.query(`insert into ${table} set ?`,body,(err,result)=>{
 		if(err) {
             res.json({

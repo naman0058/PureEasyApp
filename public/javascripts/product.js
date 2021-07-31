@@ -191,10 +191,17 @@ $('#result').on('click', '.edits', function () {
     $('#psizeid').val(result.sizeid);
     $('#pquantity').val(result.quantity);
     $('#pdescription').val(result.description);
+
+    // $('.peditor').val(result.description);
     console.log('dhdg',result.description)
     // $container.html($container.text());
   //  $('#pextra').val(result.extra);
      //$('#peid').val(result.id)
+
+     let table = `<p>${result.description}</p>
+           `
+           $('.peditor').html(table)
+
     
 })
 
@@ -208,18 +215,15 @@ $('#result').on('click', '.updateimage', function() {
 
 
 $('#update').click(function () {  //data insert in database
+
+    let content = $(".peditor").html().trim();
+    // alert(content)
+
     let updateobj = {
         id: $('#pid').val(),
-        categoryid: $('#pcategoryid').val(),
-        subcategoryid: $('#psubcategoryid').val(),
-        name: $('#pname').val(),
-        price:$('#pprice').val(),
-        discount : $('#pdiscount').val(),
-        brandid : $('#pbrandid').val(),
-        description : $('#pdescription').val(),
-        sizeid : $('#psizeid').val(),
-       short_name : $('#pshort_name').val(),
-        quantity : $('#pquantity').val(),
+        type: $('#ptype').val(),
+         name: $('#pname').val(),
+         description : content
        
     }
 

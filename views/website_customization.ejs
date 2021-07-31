@@ -201,31 +201,21 @@ unselectable {
         <form>
            
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="form-group">
                   <label>Category Name</label>
-                 <select name="categoryid" id="pcategoryid" class="form-control" required></select>
+                  <select name="name" id="pname" class="form-control">
+                    <option value="null">Choose Customization</option>
+                    <option value="pp">Privacy Policy</option>
+                    <option value="tc">Terms & Conditions</option>
+                    <option value="about">About US</option>
+                </select>
                 </div>
                 
             </div>
 
 
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Subcategory Name</label>
-                 <select name="subcategoryid" id="psubcategoryid" class="form-control" required></select>
-                </div>
-                
-            </div>
-
-
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Brand Name</label>
-                 <select name="brandid" id="pbrandid" class="form-control" required></select>
-                </div>
-                
-            </div>
+           
 
             
         </div>
@@ -234,84 +224,14 @@ unselectable {
         <input type="hidden" id="pid" class="form-control" value="pid" required>
     
 
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="form-group">
-                <label>Product Name</label>
-               <input type="text" id="pname" class="form-control" required>
-              </div>
-              
-          </div>
+     
+
+
+      
 
 
 
-          <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Short Product Name</label>
-                 <input type="text" id="pshort_name" class="form-control" required>
-                </div>
-                
-            </div>
-
-
-
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Size</label>
-                  <select name="sizeid" id="psizeid" class="form-control" required></select>
-                </div>
-                
-            </div>
-
-        
-      </div>
   
-
-
-      <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="form-group">
-                <label>Price</label>
-               <input type="text" id="pprice" class="form-control" required>
-              </div>
-              
-          </div>
-
-
-
-          <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Quantity</label>
-                 <input type="text" id="pquantity" class="form-control" required>
-                </div>
-                
-            </div>
-
-
-
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="form-group">
-                  <label>Discount (In%) </label>
-                  <input type="text" id="pdiscount" class="form-control" required>
-                </div>
-                
-            </div>
-
-        
-      </div>
-
-
-
-      <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="form-group">
-                <label>Product Description</label>
-               <textarea class="form-control" id="pdescription" required></textarea>
-              </div>
-              
-          </div>
-
-      </div>
 
 
 
@@ -352,7 +272,7 @@ unselectable {
                 <a href="javascript:void(0)" role="button" onclick="runCommand(this, 'undo', null)"><i class="fa fa-undo"></i></a>         
               </div>
               
-              <div id="editor"  contenteditable="true"></div>
+              <div id="editor" class="peditor"  contenteditable="true"></div>
               <!-- <textarea  id="messageText" type="hidden" class="pdescription" name = 'description' ></textarea> -->
               
               <!-- <div class="row">
@@ -362,7 +282,7 @@ unselectable {
               </div> -->
             </div>
             
-            <p class="pdescription" value = 'pdescription'>jhrh</p>
+          
             
         </div>
 
@@ -440,7 +360,7 @@ unselectable {
   <script src="/light/assets/js/custom.js"></script>
 
 
-  <script src="/javascripts/product.js"></script>
+  <script src="/javascripts/website.js"></script>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>

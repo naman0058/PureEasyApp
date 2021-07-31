@@ -56,16 +56,20 @@ dd<%- include ('./adminheader.ejs') %>
 <table id="myTable" class="table table-bordered table-striped mb-0">
   <thead>
   <tr>
+<th>Category</th>
+<th>Sub-Category</th>
 
-  <th>Title</th>
+  <th>Product</th>
   
   <th>Options</th>
   </tr>
   </thead>
   <tbody>
-  
+      
   <% for(i=0;i<result.length;i++) { %>
  <tr>
+  <td><%=result[i].categoryname%></td>
+  <td><%=result[i].subcategoryname%></td>
  
   <td><%=result[i].name%></td>
   

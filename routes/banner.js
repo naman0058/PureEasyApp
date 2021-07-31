@@ -29,9 +29,14 @@ router.get('/',(req,res)=>{
 
 router.get('/management',(req,res)=>{
     if(req.session.adminid){
-        pool.query(`select * from product order by name desc`,(err,result)=>{
+        pool.query(`select p.* ,
+        (select c.name from category c where c.id = p.categoryid) as categoryname,
+        (select s.name from subcategory s where s.id = p.categoryid) as subcategoryname
+
+         from product p`,(err,result)=>{
             if(err) throw err;
             else res.render('banner_management',{result})
+            //else res.json(result)
         })
         
     }
@@ -75,7 +80,11 @@ router.post('/promotional/text/insert',upload.single('image'),(req,res)=>{
 
 router.get('/promotional-text-management',(req,res)=>{
     if(req.session.adminid){
-        pool.query(`select * from product order by name desc`,(err,result)=>{
+        pool.query(`select p.* ,
+        (select c.name from category c where c.id = p.categoryid) as categoryname,
+        (select s.name from subcategory s where s.id = p.categoryid) as subcategoryname
+
+         from product p`,(err,result)=>{
             if(err) throw err;
             else res.render('promotional-text-management',{result})
         })
@@ -312,6 +321,16 @@ router.get('/details',(req,res)=>{
   })
 
 
+  router.get('/details/delete',(req,res)=>{
+      console.log(req.query.id)
+      pool.query(`delete from banner_manage where id = '${req.query.id}'`,(err,result)=>{
+          if(err) throw err;
+          else res.json({
+              msg : 'success'
+          })
+      })
+  })
+
 
 
   router.get('/promotional/details',(req,res)=>{
@@ -327,9 +346,21 @@ router.get('/details',(req,res)=>{
       from promotional_text_management t where t.bannerid = '${req.query.id}' `
       pool.query(query,(err,result)=>{
         if(err) throw err;
-       else res.render('banner_details',{result})
+       else res.render('banner_details1',{result})
       })
   })
+
+
+
+  router.get('/details1/delete',(req,res)=>{
+    console.log(req.query.id)
+    pool.query(`delete from promotional_text_management where id = '${req.query.id}'`,(err,result)=>{
+        if(err) throw err;
+        else res.json({
+            msg : 'success'
+        })
+    })
+})
 
 
 
