@@ -68,9 +68,9 @@ table+=`<tr>
 </td>
 <td>${item.name}</td>
 <td>${item.description}</td>
-<td>${item.discount}</td>
+
 <td>
-<a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
+
 <a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
 </td>
@@ -107,7 +107,7 @@ $('#result').on('click', '.edits', function() {
     $('#pid').val(result.id)
      $('#pname').val(result.name)
      $('#pdescription').val(result.description)
-     $('#pdiscount').val(result.discount)
+ 
    
  })
 
@@ -127,7 +127,7 @@ $('#update').click(function(){  //data insert in database
         id: $('#pid').val(),
         name: $('#pname').val(),
         description:$('#pdescription').val(),
-        discount : $('#pdiscount').val()
+        
        
         }
 

@@ -1,0 +1,20 @@
+1) Calendar Issue
+2) Address Not Show
+3) Contact US
+4) Socail Media Link
+5) Location
+6) Design Cut on first time
+7) After Generate Invoice ( My booking design issue)
+8) Details Page Design 
+9) Cash Payment (status completed show)
+
+
+
+
+
+
+Partner App
+
+1) Profile Static
+2) Generate Bill Option Not Show
+3) booking History option generate invoice

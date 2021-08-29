@@ -4,6 +4,7 @@ var upload = require('./multer');
 var pool = require('./pool')
 var table = 'offer';
 const fs = require("fs");
+const cookieSession = require('cookie-session');
 
 
 
@@ -30,6 +31,8 @@ router.post('/insert',upload.single('image'),(req,res)=>{
     body['image'] = req.file.filename;
 	pool.query(`insert into ${table} set ?`,body,(err,result)=>{
 		if(err) {
+    console.log(err)
+
             res.json({
                 status:500,
                 type : 'error',
