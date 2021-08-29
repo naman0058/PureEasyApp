@@ -793,7 +793,7 @@ router.get('/myorder',(req,res)=>{
     from booking b where usernumber = '${req.session.usernumber}' order by id desc `
     pool.query(query+query1,(err,result)=>{
       if(err) throw err;
-      else res.render('myorder',{result:result,login:true})
+      else res.render('myaccount',{result:result,login:true})
     })
   }
   else{
